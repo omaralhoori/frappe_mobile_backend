@@ -1,0 +1,116 @@
+{
+ "creation": "2021-10-18 15:49:32.693091",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "description",
+  "section_break_3",
+  "likes",
+  "column_break_5",
+  "views",
+  "column_break_7",
+  "approved_comments",
+  "section_break_9",
+  "comments",
+  "likes_table",
+  "views_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "likes",
+   "fieldtype": "Int",
+   "label": "Likes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "label": "Views",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "approved_comments",
+   "fieldtype": "Int",
+   "label": "Approved Comments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Table",
+   "label": "Comments",
+   "options": "Mobile Comment"
+  },
+  {
+   "fieldname": "likes_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Likes Table",
+   "options": "Mobile Like"
+  },
+  {
+   "fieldname": "views_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Views  Table",
+   "options": "Mobile View"
+  }
+ ],
+ "modified": "2021-10-18 18:07:21.878775",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "News",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,0 +1,157 @@
+{
+ "creation": "2021-10-18 23:08:05.479243",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "branch_data_section",
+  "branch_url",
+  "column_break_2",
+  "import_branch_data",
+  "year_data_section",
+  "year_url",
+  "column_break_7",
+  "import_year_data",
+  "class_data_section",
+  "class_url",
+  "column_break_11",
+  "import_class_data",
+  "section_data_section",
+  "section_url",
+  "column_break_15",
+  "import_section_data",
+  "parent_data_section",
+  "parent_url",
+  "column_break_19",
+  "default_password",
+  "import_parent_data"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch_data_section",
+   "fieldtype": "Section Break",
+   "label": "Branch Data"
+  },
+  {
+   "fieldname": "import_branch_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
+  },
+  {
+   "fieldname": "year_data_section",
+   "fieldtype": "Section Break",
+   "label": "Year Data"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBRN&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB",
+   "fieldname": "branch_url",
+   "fieldtype": "Data",
+   "label": "Branch Data Url"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBYER&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB",
+   "fieldname": "year_url",
+   "fieldtype": "Data",
+   "label": "Year Data Url"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "import_year_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
+  },
+  {
+   "fieldname": "class_data_section",
+   "fieldtype": "Section Break",
+   "label": "Class Data"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBCLS&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB",
+   "fieldname": "class_url",
+   "fieldtype": "Data",
+   "label": "Class Data Url"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "import_class_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
+  },
+  {
+   "fieldname": "section_data_section",
+   "fieldtype": "Section Break",
+   "label": "Section Data"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBSEC&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB",
+   "fieldname": "section_url",
+   "fieldtype": "Data",
+   "label": "Section Data Url"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "import_section_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
+  },
+  {
+   "fieldname": "parent_data_section",
+   "fieldtype": "Section Break",
+   "label": "Parent Data"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBCON&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN=02&PYEAR=2021",
+   "fieldname": "parent_url",
+   "fieldtype": "Small Text",
+   "label": "Parent Data Url"
+  },
+  {
+   "fieldname": "column_break_19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_password",
+   "fieldtype": "Data",
+   "label": "Default Password"
+  },
+  {
+   "fieldname": "import_parent_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2021-10-19 08:32:33.094455",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "Import School Data",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

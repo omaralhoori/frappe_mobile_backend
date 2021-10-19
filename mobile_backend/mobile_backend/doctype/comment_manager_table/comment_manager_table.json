@@ -1,0 +1,53 @@
+{
+ "creation": "2021-10-16 00:59:27.916711",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "comment",
+  "user",
+  "status",
+  "comment_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Comment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Approved\nRejected\nPending",
+   "read_only": 1
+  },
+  {
+   "fieldname": "comment_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Comment Name"
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-10-16 01:12:39.193472",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "Comment Manager Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

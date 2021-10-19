@@ -1,0 +1,65 @@
+{
+ "autoname": "format:{class}-{section_code}",
+ "creation": "2021-10-19 06:28:25.593445",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "class",
+  "section_code",
+  "section_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "class",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Class",
+   "options": "School Class",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_code",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Section Code ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Section Name",
+   "reqd": 1
+  }
+ ],
+ "modified": "2021-10-19 06:48:49.718485",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Section",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

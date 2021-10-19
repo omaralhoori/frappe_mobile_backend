@@ -1,0 +1,30 @@
+{
+ "creation": "2021-10-15 21:17:34.170084",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "User",
+   "read_only": 1,
+   "reqd": 1,
+   "set_only_once": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-10-18 18:08:44.568355",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "Mobile Like",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

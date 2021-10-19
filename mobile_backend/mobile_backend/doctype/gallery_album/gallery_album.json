@@ -1,0 +1,141 @@
+{
+ "autoname": "format:ALBUM-{####}",
+ "creation": "2021-10-16 04:47:42.885181",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "description",
+  "section_break_3",
+  "likes",
+  "column_break_5",
+  "views",
+  "column_break_7",
+  "approved_comments",
+  "images_section",
+  "upload_images",
+  "images",
+  "attach",
+  "comments_section",
+  "comments",
+  "likes_table",
+  "views_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "HTML",
+   "label": "Images"
+  },
+  {
+   "fieldname": "upload_images",
+   "fieldtype": "Button",
+   "label": "Upload Images"
+  },
+  {
+   "fieldname": "attach",
+   "fieldtype": "Attach Image",
+   "hidden": 1
+  },
+  {
+   "fieldname": "section_break_3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "likes",
+   "fieldtype": "Int",
+   "label": "Likes",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "label": "Views",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "approved_comments",
+   "fieldtype": "Int",
+   "label": "Approved Comments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "comments_section",
+   "fieldtype": "Section Break",
+   "label": "Comments"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Table",
+   "label": "Comments",
+   "options": "Mobile Comment"
+  },
+  {
+   "fieldname": "likes_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Likes Table",
+   "options": "Mobile Like",
+   "read_only": 1
+  },
+  {
+   "fieldname": "views_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Views  Table",
+   "options": "Mobile View",
+   "read_only": 1
+  }
+ ],
+ "modified": "2021-10-17 19:38:20.176549",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "Gallery Album",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

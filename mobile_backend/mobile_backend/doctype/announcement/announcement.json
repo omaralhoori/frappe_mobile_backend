@@ -1,0 +1,119 @@
+{
+ "creation": "2021-10-09 17:11:22.350910",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "description",
+  "section_break_4",
+  "likes",
+  "column_break_6",
+  "views",
+  "column_break_7",
+  "approved_comments",
+  "section_break_8",
+  "comments",
+  "likes_table",
+  "views_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "likes",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Likes",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "views",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Views",
+   "read_only": 1
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Table",
+   "label": "Comments",
+   "options": "Mobile Comment"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "approved_comments",
+   "fieldtype": "Int",
+   "label": "Approved Comments",
+   "read_only": 1
+  },
+  {
+   "fieldname": "likes_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Likes Table",
+   "options": "Mobile Like",
+   "read_only": 1
+  },
+  {
+   "fieldname": "views_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Views  Table",
+   "options": "Mobile View",
+   "read_only": 1
+  }
+ ],
+ "modified": "2021-10-15 22:56:45.658792",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "Announcement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1
+}
