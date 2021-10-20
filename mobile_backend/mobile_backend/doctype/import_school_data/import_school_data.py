@@ -97,32 +97,36 @@ class ImportSchoolData(Document):
 				contract_no = parent.find('CONNO').text
 				parent_name = parent.find('CONNAME').text
 				mobile_no = parent.find('MOBILENO').text
-				try:
-					user = frappe.get_doc({
-						"doctype": "User",
-						"first_name": parent_name,
-						"email": mobile_no + "@mail.com",
-						"mobile_no": mobile_no,
-						"send_welcome_email": 0
-					}).insert()
-					user.new_password = password
-					user.save()
-				except:
-					pass
-				# frappe.db.sql("""
-				
-				# """)
-				# try:
-				# 	frappe.get_doc({
-				# 		"doctype": "School Parent",
-				# 		"year": year_code,
-				# 		"branch": branch_code,
-				# 		"contract_no":contract_no,
-				# 		"parent_name": parent_name,
-				# 		"mobile_no": mobile_no
-				# 	}).insert()
-				# except:
-				# 	pass
+
+				if mobile_no and len(mobile_no) > 7:
+					try:
+						if not frappe.db.exists({"doctype": "User", "mobile_no": mobile_no}):
+							user = frappe.get_doc({
+								"doctype": "User",
+								"first_name": parent_name,
+								"email": mobile_no + "@mail.com",
+								"mobile_no": mobile_no,
+								"send_welcome_email": 0
+							}).insert()
+							user.new_password = password
+							user.save()
+					except:
+						pass
+					# frappe.db.sql("""
+					
+					# """)
+					try:
+						if not frappe.db.exists({"doctype": "School Parent", "mobile_no": mobile_no}):
+							frappe.get_doc({
+								"doctype": "School Parent",
+								"year": year_code,
+								"branch": branch_code,
+								"contract_no":contract_no,
+								"parent_name": parent_name,
+								"mobile_no": mobile_no
+							}).insert()
+					except:
+						pass
 			except:
 				pass
 		return {}
