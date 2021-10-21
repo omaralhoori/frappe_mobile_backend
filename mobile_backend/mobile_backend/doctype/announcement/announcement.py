@@ -28,10 +28,17 @@ def get_announcements():
 	# # start=0,
     # # page_length=20,
 	# )
-
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
+	# return frappe.db.sql("""
+	# 	SELECT name, title, description, creation, likes, views, approved_comments from `tabAnnouncement`
+	# """, as_dict=True)
 	return frappe.db.sql("""
-		SELECT name, title, description, creation, likes, views, approved_comments from `tabAnnouncement`
-	""", as_dict=True)
+		SELECT ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
+		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
+		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
+	""", (user, user) ,as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def view_announcement():
