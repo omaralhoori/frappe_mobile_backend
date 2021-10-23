@@ -30,15 +30,25 @@ def get_announcements():
 	# )
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
-	# return frappe.db.sql("""
-	# 	SELECT name, title, description, creation, likes, views, approved_comments from `tabAnnouncement`
-	# """, as_dict=True)
 	return frappe.db.sql("""
 		SELECT ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
 	""", (user, user) ,as_dict=True)
+
+@frappe.whitelist(allow_guest=True)
+def get_announcement():
+	announcement = frappe.form_dict.announcement
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
+	return frappe.db.sql("""
+		SELECT ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
+		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
+		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
+		WHERE ta.name=%s
+	""", (user, user, announcement) ,as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def view_announcement():
@@ -60,6 +70,7 @@ def view_announcement():
 def add_comment():
 	announcement = frappe.form_dict.announcement
 	comment = frappe.form_dict.comment
+	user_name = frappe.db.get_value("User", frappe.session.user, ["full_name"])
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	doc = frappe.get_doc("Announcement", announcement)
@@ -67,6 +78,7 @@ def add_comment():
 		rec = doc.append("comments")
 		rec.comment = comment
 		rec.user = user
+		rec.user_name = user_name
 		rec.status = 'Pending'
 		doc.save(ignore_permissions=True)
 		return rec.name
@@ -74,16 +86,20 @@ def add_comment():
 @frappe.whitelist(allow_guest=True)
 def get_comments():
 	announcement = frappe.form_dict.announcement
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT name, comment FROM `tabMobile Comment` WHERE parent=%s AND parenttype='Announcement' AND status='Approved'
-	""",announcement, as_dict=True)
+		SELECT user_name, name, comment, user=%s as is_owned FROM `tabMobile Comment` WHERE parent=%s AND parenttype='Announcement' AND status='Approved'
+	""",(user, announcement), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def remove_comment():
 	comment_name = frappe.form_dict.comment_name
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user) 
 	frappe.db.sql("""
-		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='Announcement'
-	""",comment_name)
+		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='Announcement' AND user=%s
+	""",(comment_name, user))
 	frappe.db.commit()
 
 @frappe.whitelist(allow_guest=True)

@@ -5,6 +5,7 @@
  "engine": "InnoDB",
  "field_order": [
   "comment",
+  "user_name",
   "user",
   "status"
  ],
@@ -28,13 +29,23 @@
   {
    "fieldname": "user",
    "fieldtype": "Data",
-   "in_list_view": 1,
+   "in_global_search": 1,
+   "in_standard_filter": 1,
    "label": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "User Name",
    "read_only": 1
   }
  ],
  "istable": 1,
- "modified": "2021-10-15 20:12:03.202450",
+ "modified": "2021-10-22 22:08:30.734230",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Mobile Comment",

@@ -59,6 +59,23 @@ def get_data():
 			]
 		},
 		{
+			"label": _("Users"),
+			"icon": "fa fa-wrench",
+			"items": [
+				{
+					"type": "doctype",
+					"name": "User",
+					"label": _("Mobile Users"),
+				},	
+				{
+					"type": "doctype",
+					"name": "Mobile Guest",
+					"label": _("Mobile Guests"),
+				},	
+				
+			]
+		},
+		{
 			"label": _("Communication"),
 			"icon": "fa fa-wrench",
 			"items": [

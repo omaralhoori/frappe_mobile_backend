@@ -30,6 +30,19 @@ def get_news():
 	""",(user, user), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
+def get_single_news():
+	news = frappe.form_dict.news
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
+	return frappe.db.sql("""
+		SELECT tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
+		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
+		LEFT JOIN `tabMobile Like` as tl ON (tn.name<=>tl.parent AND tl.parenttype='News' AND tl.user=%s)
+		LEFT JOIN `tabMobile View` as tv ON (tn.name<=>tv.parent AND tv.parenttype='News' AND tv.user=%s)
+		WHERE tn.name=%s
+	""",(user, user, news), as_dict=True)
+
+@frappe.whitelist(allow_guest=True)
 def view_news():
 	news = frappe.form_dict.news
 	user = frappe.form_dict.user
@@ -49,6 +62,7 @@ def view_news():
 def add_comment():
 	news = frappe.form_dict.news
 	comment = frappe.form_dict.comment
+	user_name = frappe.db.get_value("User", frappe.session.user, ["full_name"])
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	doc = frappe.get_doc("News", news)
@@ -56,6 +70,7 @@ def add_comment():
 		rec = doc.append("comments")
 		rec.comment = comment
 		rec.user = user
+		rec.user_name = user_name
 		rec.status = 'Pending'
 		doc.save(ignore_permissions=True)
 		return rec.name
@@ -63,16 +78,20 @@ def add_comment():
 @frappe.whitelist(allow_guest=True)
 def get_comments():
 	news = frappe.form_dict.news
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT name, comment FROM `tabMobile Comment` WHERE parent=%s AND parenttype='News' AND status='Approved'
-	""",news, as_dict=True)
+		SELECT user_name, name, comment, user=%s as is_owned FROM `tabMobile Comment` WHERE parent=%s AND parenttype='News' AND status='Approved'
+	""",(user, news), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def remove_comment():
 	comment_name = frappe.form_dict.comment_name
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user) 
 	frappe.db.sql("""
-		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='News'
-	""",comment_name)
+		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='News' AND user=%s
+	""",(comment_name, user))
 	frappe.db.commit()
 
 @frappe.whitelist(allow_guest=True)

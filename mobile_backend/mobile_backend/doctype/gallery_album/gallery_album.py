@@ -32,6 +32,23 @@ def get_albums():
 		ON a.name=ftable.attached_to_name
 	""", (user, user),as_dict=True)
 
+@frappe.whitelist(allow_guest=True)
+def get_album():
+	album = frappe.form_dict.album
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
+	return frappe.db.sql("""
+		SELECT a.name, a.title, a.description, a.creation, a.likes, a.views, a.approved_comments, ftable.file_url ,IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabGallery Album` as a
+		LEFT JOIN `tabMobile Like` as tl ON (a.name<=>tl.parent AND tl.parenttype='Gallery Album' AND tl.user=%s)
+		LEFT JOIN `tabMobile View` as tv ON (a.name<=>tv.parent AND tv.parenttype='Gallery Album' AND tv.user=%s)
+		INNER JOIN
+		(SELECT f.attached_to_name ,GROUP_CONCAT(f.file_url) as file_url FROM `tabFile` AS f
+		WHERE f.attached_to_doctype='Gallery Album'
+		GROUP BY f.attached_to_name) AS ftable 
+		ON a.name=ftable.attached_to_name
+		WHERE a.name=%s
+	""", (user, user, album),as_dict=True)
+
 
 @frappe.whitelist(allow_guest=True)
 def view_album():
@@ -52,6 +69,7 @@ def view_album():
 def add_comment():
 	album = frappe.form_dict.album
 	comment = frappe.form_dict.comment
+	user_name = frappe.db.get_value("User", frappe.session.user, ["full_name"])
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	doc = frappe.get_doc("Gallery Album", album)
@@ -59,6 +77,7 @@ def add_comment():
 		rec = doc.append("comments")
 		rec.comment = comment
 		rec.user = user
+		rec.user_name = user_name
 		rec.status = 'Pending'
 		doc.save(ignore_permissions=True)
 		return rec.name
@@ -66,16 +85,20 @@ def add_comment():
 @frappe.whitelist(allow_guest=True)
 def get_comments():
 	album = frappe.form_dict.album
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT name, comment FROM `tabMobile Comment` WHERE parent=%s AND parenttype='Gallery Album' AND status='Approved'
-	""",album, as_dict=True)
+		SELECT user_name, name, comment, user=%s as is_owned FROM `tabMobile Comment` WHERE parent=%s AND parenttype='Gallery Album' AND status='Approved'
+	""",(user, album), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def remove_comment():
 	comment_name = frappe.form_dict.comment_name
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user) 
 	frappe.db.sql("""
-		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='Gallery Album'
-	""",comment_name)
+		DELETE FROM `tabMobile Comment` WHERE name=%s AND parenttype='Gallery Album' AND user=%s
+	""",(comment_name, user))
 	frappe.db.commit()
 
 
