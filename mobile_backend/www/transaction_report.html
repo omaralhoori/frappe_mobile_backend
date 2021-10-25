@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Document</title>
+    <style>
+        *{
+            font-family: sans-serif;
+        }
+        .container{
+            width: 90%;
+            margin: 20px auto;
+        }
+        .header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #AAA;
+            padding: 10px;
+        }
+        .logo{
+
+        }
+        .logo img{
+            height: 100px;
+        }
+        .label{
+            font-size: 2.2em;
+            color: #008ef2;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+        }
+
+        .main-content{
+            margin: 20px auto;
+        }
+        .parent-info{
+            border-bottom: 1px solid #AAA;
+            padding: 10px;
+        }
+        .parent-info div{
+            margin: 15px 0;
+            letter-spacing: 0.2px;
+            color: #222;
+        }
+        .students{
+
+        }
+        .student{
+            border-bottom: 1px solid #AAA;
+            padding: 10px;
+            margin: 20px auto;
+        }
+        .student > div{
+            margin: 10px auto;
+            letter-spacing: 0.2px;
+            color: #222;
+        }
+        table{
+            text-align: center;
+            width: 100%;
+            margin: 0px;
+            padding: 15px;
+        }
+        thead{
+            background-color: #018ceeb7;
+            color: #fff;
+        }
+        td, th{
+            border: 1px solid #222;
+            padding: 10px 5px;
+        }
+        .table-label{
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="/files/transaction-report-logo.png" alt="School Logo">
+        </div>
+        <div class="label">
+            INVOICE
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="parent-info">
+            <div><strong>Year:</strong> {{YEARNAME}}</div>
+            <div><strong>Branch:</strong> {{BRNNAME}} - {{BRNCODE}}</div>
+            <div><strong>Contract No:</strong> {{CONNO}}</div>
+            <div><strong>Parent Name:</strong> {{CONNAME}}</div>
+        </div>
+        <div class="students">
+            {% for student in student_list %}
+            <div class="student">
+                <div><strong>Student No:</strong> {{ student.STDNO }}</div>
+                <div><strong>Student Name:</strong> {{ student.STDNAME }}</div>
+                <div><strong>Student Gender:</strong> {{ student.STDGENDER }}</div>
+                <div><strong>Class:</strong> {{ student.CLSNAME }} - {{ student.CLSCODE }}</div>
+                <div><strong>Section:</strong> {{ student.SECNAME }} - {{ student.SECCODE }}</div>
+                <div class="table-container">
+                    <div class="table-label">Transactions</div>
+                    <table BORDER=0 CELLSPACING=0>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Voucher</th>
+                                <th>Date</th>
+                                <th>Note</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in student.StudentTransaction %}
+                                <tr>
+                                    <td>{{ transaction.TRXCODE }}</td>
+                                    <td>{{ transaction.TRXNAME }}</td>
+                                    <td>{{ transaction.TRXVOUCHER }}</td>
+                                    <td>{{ transaction.TRXDATE }}</td>
+                                    <td>{{ transaction.TRXNOTE or '-' }}</td>
+                                    <td>{{ transaction.TRXAMT }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <div class="table-label">Extra Amounts</div>
+                    <table BORDER=0 CELLSPACING=0>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Voucher</th>
+                                <th>Date</th>
+                                <th>Note</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in student.StudentExtraAmount %}
+                                <tr>
+                                    <td>{{ transaction.TRXEXCODE }}</td>
+                                    <td>{{ transaction.TRXEXNAME }}</td>
+                                    <td>{{ transaction.TRXEXVOUCHER }}</td>
+                                    <td>{{ transaction.TRXEXDATE }}</td>
+                                    <td>{{ transaction.TRXEXNOTE or '-' }}</td>
+                                    <td>{{ transaction.TRXEXAMT }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <div class="table-label">Installment Payments</div>
+                    <table BORDER=0 CELLSPACING=0>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Paid</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in student.StudentInstallment %}
+                                <tr>
+                                    <td>{{ transaction.PAYNO }}</td>
+                                    <td>{{ transaction.PAYDATE }}</td>
+                                    <td>{{ transaction.PAYAMT }}</td>
+                                    <td>{{ transaction.PAYPAID }}</td>
+                                    <td>{{ transaction.PAYBAL }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-container">
+                    <div class="table-label">Fees</div>
+                    <table BORDER=0 CELLSPACING=0>
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Fee</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in student.StudentFees %}
+                                <tr>
+                                    <td>{{ transaction.FEECODE }}</td>
+                                    <td>{{ transaction.FEENAME }}</td>
+                                    <td>{{ transaction.AMTFEE }}</td>
+                                    <td>{{ transaction.AMFDSC }}</td>
+                                    <td>{{ transaction.AMTTOT }}</td>
+                                    <td>{{ transaction.AMTPAID }}</td>
+                                    <td>{{ transaction.AMTBAL }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+   </div>
+   </div>
+</body>
+</html>

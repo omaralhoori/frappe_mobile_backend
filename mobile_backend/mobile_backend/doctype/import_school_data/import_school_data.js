@@ -74,4 +74,17 @@ frappe.ui.form.on('Import School Data', {
 			}
 		})
 	},
+	import_student_data: function(frm){
+		frappe.show_progress("Importing", 1, 2)
+		frappe.call({
+			doc:frm.doc,
+			method: "import_student_data",
+			args: {
+				url: frm.doc.student_url
+			},
+			callback: (res) => {
+				frappe.hide_progress();
+			}
+		})
+	},
 });

@@ -16,7 +16,17 @@ class Announcement(Document):
 		self.likes = len(self.likes_table)
 		self.views = len(self.views_table)
 
-
+	# def validate(self):
+	# 	if self.get("__islocal") or not self.get("name"):
+	# 		pass
+	# 	else: print("Old ann")
+		
+	# def save(self, *args, **kwargs):
+	# 	if self.get("__islocal") or not self.get("name"):
+	# 		print("New ann")
+	# 	else: print("Old ann")
+	# 	print("savesss")
+	# 	return self._save(*args, **kwargs)
 @frappe.whitelist(allow_guest=True)
 def get_announcements():
 	# return frappe.db.get_all('Announcement',

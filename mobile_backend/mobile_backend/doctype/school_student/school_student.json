@@ -1,0 +1,100 @@
+{
+ "creation": "2021-10-24 18:14:58.345102",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "year",
+  "branch",
+  "contract_no",
+  "parent_no",
+  "student_no",
+  "student_name",
+  "student_gender",
+  "class",
+  "section"
+ ],
+ "fields": [
+  {
+   "fieldname": "year",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Year",
+   "options": "School Year"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Branch",
+   "options": "School Branch"
+  },
+  {
+   "fieldname": "contract_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Contract No"
+  },
+  {
+   "fieldname": "parent_no",
+   "fieldtype": "Link",
+   "label": "Parent",
+   "options": "School Parent"
+  },
+  {
+   "fieldname": "student_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Student No"
+  },
+  {
+   "fieldname": "student_name",
+   "fieldtype": "Data",
+   "label": "Student Name"
+  },
+  {
+   "fieldname": "student_gender",
+   "fieldtype": "Select",
+   "label": "Student Gender",
+   "options": "Male\nFemale"
+  },
+  {
+   "fieldname": "class",
+   "fieldtype": "Link",
+   "label": "Class",
+   "options": "School Class"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "School Section"
+  }
+ ],
+ "modified": "2021-10-25 13:27:36.719538",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Student",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

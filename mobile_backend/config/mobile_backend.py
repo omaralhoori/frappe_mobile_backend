@@ -55,6 +55,11 @@ def get_data():
 					"name": "School Parent",
 					"label": _("Parents"),
 				},	
+				{
+					"type": "doctype",
+					"name": "School Student",
+					"label": _("Students"),
+				},	
 				
 			]
 		},

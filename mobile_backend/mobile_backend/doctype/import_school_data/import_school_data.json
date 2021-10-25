@@ -24,7 +24,11 @@
   "parent_url",
   "column_break_19",
   "default_password",
-  "import_parent_data"
+  "import_parent_data",
+  "student_data_section",
+  "student_url",
+  "column_break_24",
+  "import_student_data"
  ],
  "fields": [
   {
@@ -131,10 +135,30 @@
    "fieldname": "import_parent_data",
    "fieldtype": "Button",
    "label": "Import Data"
+  },
+  {
+   "fieldname": "student_data_section",
+   "fieldtype": "Section Break",
+   "label": "Student Data"
+  },
+  {
+   "default": "http://202.147.198.58:8888/reports/rwservlet?report=STRMOBSTD&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN=02&PYEAR=2021",
+   "fieldname": "student_url",
+   "fieldtype": "Small Text",
+   "label": "Student Data Url"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "import_student_data",
+   "fieldtype": "Button",
+   "label": "Import Data"
   }
  ],
  "issingle": 1,
- "modified": "2021-10-19 08:32:33.094455",
+ "modified": "2021-10-24 16:55:04.257079",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Import School Data",

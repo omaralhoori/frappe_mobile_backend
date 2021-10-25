@@ -1,34 +1,11 @@
 from __future__ import unicode_literals
+from copy import Error
 import frappe
 from frappe import _
-from frappe.utils.pdf import get_pdf
 import requests
 from xml.etree import ElementTree
-import pdfkit
 
-def get_or_create_user(user):
-    if frappe.session.user == 'Guest' and user:
-        res = frappe.db.get_value("Mobile Guest", user, ["name","is_active"])
-        if res:
-            name, is_active = res
-            if is_active == 1:
-                return name
-            else: return frappe.throw("You are not allowed to use the system.")
-        else:
-            user_doc = frappe.get_doc({
-                "doctype": "Mobile Guest",
-                "device_id": user
-            })
-            user_doc.insert(ignore_permissions=True)
-            frappe.db.commit()
-            return user_doc.name
-    else:
-        return frappe.session.user
-
-
-@frappe.whitelist()
-def get_transactions_pdf():
-    #response = requests.get('http://islah.erp:8000/transaction_report?PBRN=02&PYEAR=2021&PCONNO=2021/00008')
+def get_context(context):
     if frappe.session.user == "Guest":
         frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
     branch=frappe.local.form_dict.PBRN
@@ -68,28 +45,14 @@ def get_transactions_pdf():
             "StudentInstallment": installments,
             "StudentFees": fees,
         })
-    YEARNAME = parent.find('YEARNAME').text
-    BRNNAME = frappe.db.get_value("School Branch", parent.find('BRNCODE').text, ["branch_name"])
-    BRNCODE = parent.find('BRNCODE').text
-    CONNO = parent.find('CONNO').text
-    CONNAME = parent.find('CONNAME').text
-    #hosturl = frappe.utils.()
-    html = frappe.render_template('templates/transaction_report.html', {
-        "student_list": student_list,
-        "YEARNAME": YEARNAME,
-        "BRNNAME": BRNNAME,
-        "BRNCODE": BRNCODE,
-        "CONNO": CONNO,
-        "CONNAME": CONNAME,
-        "hosturl": "http://{}:8000".format(frappe.local.site),
-    }) #response.content
-    name = branch+"-"+ year + "-" + contract + ".html"
-    # with open( name.replace("/", "-"), "w+") as f:
-    #     f.write(html)
-    frappe.local.response.filename = name
-    frappe.local.response.filecontent = pdfkit.from_string(html, False) #get_pdf(html)
-    frappe.local.response.type = "pdf"
+    context.student_list = student_list
+    context.YEARNAME = parent.find('YEARNAME').text
+    context.BRNNAME = frappe.db.get_value("School Branch", parent.find('BRNCODE').text, ["branch_name"])
+    context.BRNCODE = parent.find('BRNCODE').text
+    context.CONNO = parent.find('CONNO').text
+    context.CONNAME = parent.find('CONNAME').text
 
+    return context
 
 
 def get_transactions(student_transaction):
