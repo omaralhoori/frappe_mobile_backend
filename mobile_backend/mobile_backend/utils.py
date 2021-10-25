@@ -28,7 +28,6 @@ def get_or_create_user(user):
 
 @frappe.whitelist()
 def get_transactions_pdf():
-    #response = requests.get('http://islah.erp:8000/transaction_report?PBRN=02&PYEAR=2021&PCONNO=2021/00008')
     if frappe.session.user == "Guest":
         frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
     branch=frappe.local.form_dict.PBRN

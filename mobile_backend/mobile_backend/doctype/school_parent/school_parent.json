@@ -9,7 +9,8 @@
   "branch",
   "contract_no",
   "parent_name",
-  "mobile_no"
+  "mobile_no",
+  "device_token"
  ],
  "fields": [
   {
@@ -58,9 +59,15 @@
    "label": "Mobile No",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "device_token",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Device Token"
   }
  ],
- "modified": "2021-10-19 08:23:52.846779",
+ "modified": "2021-10-25 13:42:07.801888",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Parent",
