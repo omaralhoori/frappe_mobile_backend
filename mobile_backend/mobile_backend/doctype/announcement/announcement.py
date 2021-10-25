@@ -27,6 +27,27 @@ class Announcement(Document):
 	# 	else: print("Old ann")
 	# 	print("savesss")
 	# 	return self._save(*args, **kwargs)
+
+@frappe.whitelist(allow_guest=True)
+def get_all_contents():
+	user = frappe.form_dict.user
+	user = utils.get_or_create_user(user)
+	return frappe.db.sql("""
+	SELECT type, name, title, description, creation, likes, views, approved_comments, is_viewed, is_liked FROM
+		(SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
+		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user="{user}")
+		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user="{user}")
+		UNION
+		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
+		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
+		LEFT JOIN `tabMobile Like` as tl ON (tn.name<=>tl.parent AND tl.parenttype='News' AND tl.user="{user}")
+		LEFT JOIN `tabMobile View` as tv ON (tn.name<=>tv.parent AND tv.parenttype='News' AND tv.user="{user}")
+		) as all_content
+		ORDER BY creation DESC
+	""".format(user=user) ,as_dict=True)
+
+
 @frappe.whitelist(allow_guest=True)
 def get_announcements():
 	# return frappe.db.get_all('Announcement',
