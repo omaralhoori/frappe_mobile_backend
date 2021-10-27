@@ -10,7 +10,8 @@
   "contract_no",
   "parent_name",
   "mobile_no",
-  "device_token"
+  "device_token",
+  "messages"
  ],
  "fields": [
   {
@@ -65,9 +66,15 @@
    "fieldtype": "Small Text",
    "hidden": 1,
    "label": "Device Token"
+  },
+  {
+   "fieldname": "messages",
+   "fieldtype": "Table",
+   "label": "Messages",
+   "options": "School Parent Message"
   }
  ],
- "modified": "2021-10-25 13:42:07.801888",
+ "modified": "2021-10-26 01:59:33.951662",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Parent",

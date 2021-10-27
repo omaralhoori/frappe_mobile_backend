@@ -23,7 +23,7 @@ def get_news():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
+		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
 		LEFT JOIN `tabMobile Like` as tl ON (tn.name<=>tl.parent AND tl.parenttype='News' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (tn.name<=>tv.parent AND tv.parenttype='News' AND tv.user=%s)
@@ -35,7 +35,7 @@ def get_single_news():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
+		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
 		LEFT JOIN `tabMobile Like` as tl ON (tn.name<=>tl.parent AND tl.parenttype='News' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (tn.name<=>tv.parent AND tv.parenttype='News' AND tv.user=%s)

@@ -65,17 +65,21 @@
   {
    "fieldname": "class",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Class",
    "options": "School Class"
   },
   {
    "fieldname": "section",
    "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_standard_filter": 1,
    "label": "Section",
    "options": "School Section"
   }
  ],
- "modified": "2021-10-25 13:27:36.719538",
+ "modified": "2021-10-26 12:13:29.882836",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Student",

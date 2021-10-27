@@ -1,2 +1,2 @@
 mobile_backend.patches.v1_0.create_unique_indexes
-mobile_backend.patches.v1_0.add_device_token
+mobile_backend.patches.v1_0.create_message_index

@@ -62,7 +62,7 @@ def get_announcements():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
@@ -74,7 +74,7 @@ def get_announcement():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
