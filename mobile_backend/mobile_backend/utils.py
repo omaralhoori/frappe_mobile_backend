@@ -27,4 +27,5 @@ def get_or_create_user(user):
 
 
 def get_current_site_name():
-    return get_site_name(frappe.local.request.host)
+    #return get_site_name(frappe.local.request.host), frappe.local.site, frappe.local.request.host
+    return frappe.local.site

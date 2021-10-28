@@ -59,7 +59,7 @@ def get_transactions_pdf():
         "BRNCODE": BRNCODE,
         "CONNO": CONNO,
         "CONNAME": CONNAME,
-        "hosturl": "http://{}:8000".format(frappe.local.site),
+        "hosturl": "http://{}".format(frappe.local.request.host),
     }) #response.content
     name = branch+"-"+ year + "-" + contract + ".html"
     # with open( name.replace("/", "-"), "w+") as f:

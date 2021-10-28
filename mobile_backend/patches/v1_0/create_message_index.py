@@ -6,5 +6,5 @@ def execute():
         #frappe.db.sql('''ALTER TABLE `tabSchool Parent Message` DROP INDEX Message_Index;''')
         frappe.db.sql('''
             CREATE UNIQUE INDEX Message_Index
-                ON `tabSchool Parent Message`(parenttype,parent,message_name,student)
+                ON `tabSchool Parent Message`(message_type,parent,message_name,student)
         ''')
