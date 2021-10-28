@@ -23,3 +23,9 @@ def update_user_info():
             return {
                 "error": "Email is in use!"
             }
+
+@frappe.whitelist()
+def get_parent_data():
+    user = frappe.session.user
+    data = frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
+    return data if data else {}
