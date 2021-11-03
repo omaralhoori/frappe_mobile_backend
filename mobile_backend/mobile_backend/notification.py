@@ -23,25 +23,54 @@ def send_notification():
         "contract_no": contract
     }, ["device_token"])
     if token:
-        return send_parent_notification(token, title, message)
+        return send_token_notification(token, title, message)
     else:
         return "token not found"
 
 
-def send_parent_notification(token, title, message):
-    if not frappe.local.conf.fcm_server_key:
-        return "Firebase Cloud Messaging API Key is not set"
+def send_multiple_notification(tokens, title, message, data=None):
+    if not tokens or len(tokens) == 0:
+        return
+    body = {
+          'notification': {'title': title,
+                            'body': message},
+          'registration_ids':
+              tokens,
+          'priority': 'high',}
+    if data:
+        body["data"] = data
+    return send_http_notification(body)
+
+def send_token_notification(token, title, message, data=None):
     if not token:
         return
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': frappe.local.conf.fcm_server_key,
-      }
     body = {
           'notification': {'title': title,
                             'body': message},
           'to':
               token,
           'priority': 'high',}
+    if data:
+        body["data"] = data
+    return send_http_notification(body)
+
+
+def send_topic_notification(topic, title, message, data=None):
+    body = {
+          'notification': {'title': title,
+                            'body': message},
+          'to': '/topics/' + topic,
+          'priority': 'high',}
+    if data:
+        body["data"] = data
+    return send_http_notification(body)
+
+def send_http_notification(body):
+    if not frappe.local.conf.fcm_server_key:
+        return "Firebase Cloud Messaging API Key is not set"
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': frappe.local.conf.fcm_server_key,
+      }
     response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
     return response.json()

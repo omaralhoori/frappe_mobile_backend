@@ -86,6 +86,11 @@ def get_data():
 			"items": [
 				{
 					"type": "doctype",
+					"name": "School Messaging",
+					"label": _("Messages"),
+				},	
+				{
+					"type": "doctype",
 					"name": "School Group Message",
 					"label": _("Group Messages"),
 				},	

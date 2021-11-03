@@ -83,6 +83,9 @@ def section_query(doctype, txt, searchfield, start, page_len, filters):
 			'page_len': page_len
 		})
 
+@frappe.whitelist()
+def get_message_types(doctype, txt, searchfield, start, page_len, filters):
+	return [("School Direct Message", "School Direct Message"),( "School Group Message",  "School Group Message")]
 
 def get_fields(doctype, fields=None):
 	if fields is None:

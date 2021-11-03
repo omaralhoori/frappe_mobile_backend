@@ -6,8 +6,11 @@ from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
 from mobile_backend.mobile_backend import utils
+from mobile_backend.mobile_backend import notification
 
 class Announcement(Document):
+	def after_insert(self):
+		notification.send_topic_notification('announcement', 'New announcement', self.title)
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:

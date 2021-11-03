@@ -1,0 +1,69 @@
+.messaging-wrapper{
+
+}
+
+.messaging-wrapper .messaging-header{
+	background-color: #fafbfc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 10px;
+	margin: 10px auto;
+}
+
+.messaging-wrapper .messaging-body textarea{
+	height: 100px;
+}
+
+.messaging-wrapper .message-wrapper{
+    margin-top: 5px;
+}
+.messaging-wrapper .message-wrapper .message{
+    background-color: #f2f2f3;
+    width: 50%;
+    padding: 12px;
+    border-radius: 4px;
+	overflow-wrap: break-word;
+	white-space: pre;
+}
+
+.messaging-wrapper .message-wrapper .sender{
+    font-weight: bold;
+}
+.messaging-wrapper .message-wrapper .delete-message{
+    border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	background-color: #ffffff;
+	border: 1px solid #aaa;
+	margin: auto 5px;
+}
+.messaging-wrapper .message-wrapper .message-btn{
+    display: flex;
+	align-items: center;
+}
+
+.messaging-wrapper .admin-message .message{
+	margin-left: 10px;
+} 
+
+.messaging-wrapper .user-message .message{
+	margin-right: 10px;
+	direction: ltr;
+} 
+.messaging-wrapper .user-message {
+	direction: rtl;
+} 
+.messaging-wrapper .sending-date {
+		font-size: .9em;
+		color: #888;
+}
+.messaging-wrapper i{
+	display: none;
+	color: rgba(20, 20, 20, 0.5);
+	margin: auto 5px;
+}
+/* .messaging-wrapper .viewed.list.last i{
+	display: inline-block;
+	
+} */

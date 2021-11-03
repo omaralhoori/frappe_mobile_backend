@@ -22,5 +22,7 @@ frappe.ui.form.on('School Group Message', {
 				]
 			}
 		});
+		
+
 	}
 });

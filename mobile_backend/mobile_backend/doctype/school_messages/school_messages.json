@@ -1,0 +1,59 @@
+{
+ "creation": "2021-10-31 08:52:32.539669",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sender_name",
+  "message",
+  "is_read",
+  "is_administration",
+  "sending_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "sender_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Sender Name"
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Message",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_read",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Read"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_administration",
+   "fieldtype": "Check",
+   "label": "Is Administration"
+  },
+  {
+   "fieldname": "sending_date",
+   "fieldtype": "Datetime",
+   "label": "Sending Date",
+   "read_only": 1,
+   "set_only_once": 1
+  }
+ ],
+ "istable": 1,
+ "modified": "2021-10-31 20:01:26.417220",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Messages",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

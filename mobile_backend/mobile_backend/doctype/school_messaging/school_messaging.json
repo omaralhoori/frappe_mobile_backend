@@ -1,0 +1,116 @@
+{
+ "creation": "2021-10-31 09:14:52.951897",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "message_type",
+  "branch",
+  "student_no",
+  "title",
+  "column_break_3",
+  "message_name",
+  "parent_name",
+  "student_name",
+  "status",
+  "messages_section",
+  "messages",
+  "messaging_container"
+ ],
+ "fields": [
+  {
+   "fieldname": "message_type",
+   "fieldtype": "Link",
+   "label": "Message Type",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "message_name",
+   "fieldtype": "Data",
+   "label": "Message Name"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "School Branch"
+  },
+  {
+   "fieldname": "parent_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parent",
+   "options": "School Parent",
+   "reqd": 1
+  },
+  {
+   "fieldname": "messages",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Messages",
+   "options": "School Messages"
+  },
+  {
+   "fieldname": "messaging_container",
+   "fieldtype": "HTML",
+   "label": "Messaging Container"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "messages_section",
+   "fieldtype": "Section Break",
+   "label": "Messages"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "student_no",
+   "fieldtype": "Data",
+   "label": "Student No"
+  },
+  {
+   "fieldname": "student_name",
+   "fieldtype": "Data",
+   "label": "Student Name"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Seen\nNot seen"
+  }
+ ],
+ "modified": "2021-11-03 07:31:53.148580",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Messaging",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
