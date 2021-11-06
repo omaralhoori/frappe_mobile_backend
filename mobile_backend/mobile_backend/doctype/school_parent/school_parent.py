@@ -7,7 +7,9 @@ import frappe
 from frappe.model.document import Document
 
 class SchoolParent(Document):
-	pass
+	def get_students(self):
+		#students = []
+		return frappe.db.get_list("School Student", {"parent_no": self.name}, ["student_no", "student_name", "class", "section"])
 
 
 

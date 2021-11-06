@@ -28,4 +28,12 @@ def update_user_info():
 def get_parent_data():
     user = frappe.session.user
     data = frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
+    students = frappe.db.sql("""
+        SELECT student_no, student_name, class, section
+        FROM `tabSchool Student`
+        WHERE parent_no=%s
+    """, user, as_dict=True)
+    #frappe.db.get_list("School Student", filters = {"parent_no": user}, fields=["student_no", "student_name", "class", "section"])
+    if data:
+        data["students"] = students
     return data if data else {}
