@@ -113,6 +113,11 @@ def get_data():
 			"items": [
 				{
 					"type": "doctype",
+					"name": "School Settings",
+					"label": _("Settings"),
+				},	
+				{
+					"type": "doctype",
 					"name": "Comment Manager",
 					"label": _("Comment Manager"),
 				},	

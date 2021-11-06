@@ -5,6 +5,12 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "branch",
+  "column_break_2",
+  "class_code",
+  "column_break_4",
+  "section",
+  "section_break_6",
   "title",
   "description",
   "section_break_3",
@@ -114,9 +120,40 @@
    "label": "Views  Table",
    "options": "Mobile View",
    "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "label": "Branch",
+   "options": "School Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section",
+   "fieldtype": "Link",
+   "label": "Section",
+   "options": "School Section"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "class_code",
+   "fieldtype": "Link",
+   "label": "Class",
+   "options": "School Class"
   }
  ],
- "modified": "2021-10-17 19:38:20.176549",
+ "modified": "2021-11-05 10:49:08.948692",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Gallery Album",

@@ -22,7 +22,7 @@ def get_albums():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT a.name, a.title, a.description, a.creation, a.likes, a.views, a.approved_comments, ftable.file_url ,IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabGallery Album` as a
+		SELECT a.name, a.branch, a.class_code, a.section ,a.title, a.description, a.creation, a.likes, a.views, a.approved_comments, ftable.file_url ,IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabGallery Album` as a
 		LEFT JOIN `tabMobile Like` as tl ON (a.name<=>tl.parent AND tl.parenttype='Gallery Album' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (a.name<=>tv.parent AND tv.parenttype='Gallery Album' AND tv.user=%s)
 		INNER JOIN
@@ -38,7 +38,7 @@ def get_album():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT a.name, a.title, a.description, a.creation, a.likes, a.views, a.approved_comments, ftable.file_url ,IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabGallery Album` as a
+		SELECT a.name, a.branch, a.class_code, a.section, a.title, a.description, a.creation, a.likes, a.views, a.approved_comments, ftable.file_url ,IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabGallery Album` as a
 		LEFT JOIN `tabMobile Like` as tl ON (a.name<=>tl.parent AND tl.parenttype='Gallery Album' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (a.name<=>tv.parent AND tv.parenttype='Gallery Album' AND tv.user=%s)
 		INNER JOIN

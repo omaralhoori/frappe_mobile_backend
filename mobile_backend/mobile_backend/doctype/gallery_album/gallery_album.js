@@ -17,6 +17,26 @@ frappe.ui.form.on('Gallery Album', {
 				</div>`).appendTo(frm.fields_dict.images.wrapper)
 			}
 		}
+
+		frm.set_query("branch", function() {
+			return {
+				query: "mobile_backend.controllers.data_query.branch_query"
+			};
+		});
+		frm.set_query("class_code", function() {
+			return {
+				query: "mobile_backend.controllers.data_query.class_query"
+			};
+		});
+		
+		frm.set_query("section", function() {
+			return {
+				query: "mobile_backend.controllers.data_query.section_query",
+				filters: [
+					["class", "=", frm.doc.class_code]
+				]
+			}
+		});
 	},
 	onload: function(frm){
 		// if(!frm.is_new()){
