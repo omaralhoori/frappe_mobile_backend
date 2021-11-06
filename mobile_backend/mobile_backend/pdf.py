@@ -64,8 +64,9 @@ def get_transactions_pdf():
     name = branch+"-"+ year + "-" + contract + ".html"
     # with open( name.replace("/", "-"), "w+") as f:
     #     f.write(html)
+    options = { 'quiet': '' }
     frappe.local.response.filename = name
-    frappe.local.response.filecontent = pdfkit.from_string(html, False) #get_pdf(html)
+    frappe.local.response.filecontent = pdfkit.from_string(html, False,  options=options) #get_pdf(html)
     frappe.local.response.type = "pdf"
 
 
