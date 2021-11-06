@@ -12,6 +12,10 @@
   "views",
   "column_break_7",
   "approved_comments",
+  "images_section",
+  "upload_images",
+  "images",
+  "attach",
   "section_break_8",
   "comments",
   "likes_table",
@@ -90,9 +94,29 @@
    "label": "Views  Table",
    "options": "Mobile View",
    "read_only": 1
+  },
+  {
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "upload_images",
+   "fieldtype": "Button",
+   "label": "Upload Images"
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "HTML",
+   "label": "Images"
+  },
+  {
+   "fieldname": "attach",
+   "fieldtype": "Attach Image",
+   "hidden": 1
   }
  ],
- "modified": "2021-10-15 22:56:45.658792",
+ "modified": "2021-11-06 09:50:22.862739",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Announcement",

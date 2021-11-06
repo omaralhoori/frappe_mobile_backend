@@ -36,16 +36,26 @@ def get_all_contents():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-	SELECT type, name, title, description, creation, likes, views, approved_comments, is_viewed, is_liked FROM
-		(SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+	SELECT type, name, title, description, creation, likes, views, approved_comments, is_viewed, is_liked, file_url FROM
+		(SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, ftable.file_url,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user="{user}")
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user="{user}")
+		LEFT JOIN
+		(SELECT f.attached_to_name ,GROUP_CONCAT(f.file_url) as file_url FROM `tabFile` AS f
+		WHERE f.attached_to_doctype='Announcement'
+		GROUP BY f.attached_to_name) AS ftable 
+		ON ta.name=ftable.attached_to_name
 		UNION
-		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,
+		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,ftable.file_url,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
 		LEFT JOIN `tabMobile Like` as tl ON (tn.name<=>tl.parent AND tl.parenttype='News' AND tl.user="{user}")
 		LEFT JOIN `tabMobile View` as tv ON (tn.name<=>tv.parent AND tv.parenttype='News' AND tv.user="{user}")
+		LEFT JOIN
+		(SELECT f.attached_to_name ,GROUP_CONCAT(f.file_url) as file_url FROM `tabFile` AS f
+		WHERE f.attached_to_doctype='News'
+		GROUP BY f.attached_to_name) AS ftable 
+		ON tn.name=ftable.attached_to_name
 		) as all_content
 		ORDER BY creation DESC
 	""".format(user=user) ,as_dict=True)
@@ -65,10 +75,15 @@ def get_announcements():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, ftable.file_url , 
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
+		LEFT JOIN
+		(SELECT f.attached_to_name ,GROUP_CONCAT(f.file_url) as file_url FROM `tabFile` AS f
+		WHERE f.attached_to_doctype='Announcement'
+		GROUP BY f.attached_to_name) AS ftable 
+		ON ta.name=ftable.attached_to_name
 	""", (user, user) ,as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
@@ -77,10 +92,15 @@ def get_announcement():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, 
+		SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, ftable.file_url , 
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user=%s)
 		LEFT JOIN `tabMobile View` as tv ON (ta.name<=>tv.parent AND tv.parenttype='Announcement' AND tv.user=%s)
+		LEFT JOIN
+		(SELECT f.attached_to_name ,GROUP_CONCAT(f.file_url) as file_url FROM `tabFile` AS f
+		WHERE f.attached_to_doctype='Announcement'
+		GROUP BY f.attached_to_name) AS ftable 
+		ON ta.name=ftable.attached_to_name
 		WHERE ta.name=%s
 	""", (user, user, announcement) ,as_dict=True)
 

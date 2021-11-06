@@ -4,7 +4,7 @@
 frappe.ui.form.on('Gallery Album', {
 	refresh: function(frm) {
 		let attachments = frm.attachments.get_attachments();
-		let image_extensions = ['png', 'jpg', 'jpeg', 'bmp', 'jfif', 'tiff', 'gif'];
+		let image_extensions = ['png', 'jpe', 'jpg', 'jpeg', 'bmp', 'jfif', 'tiff', 'gif'];
 		$(frm.fields_dict.images.wrapper).html('')
 		for (let i in attachments){
 			let attachment = attachments[i];

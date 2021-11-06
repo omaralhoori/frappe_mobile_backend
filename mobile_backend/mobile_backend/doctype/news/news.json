@@ -12,6 +12,10 @@
   "views",
   "column_break_7",
   "approved_comments",
+  "images_section",
+  "upload_images",
+  "images",
+  "attach",
   "section_break_9",
   "comments",
   "likes_table",
@@ -88,9 +92,29 @@
    "hidden": 1,
    "label": "Views  Table",
    "options": "Mobile View"
+  },
+  {
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "upload_images",
+   "fieldtype": "Button",
+   "label": "Upload Images"
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "HTML",
+   "label": "Images"
+  },
+  {
+   "fieldname": "attach",
+   "fieldtype": "Attach Image",
+   "hidden": 1
   }
  ],
- "modified": "2021-10-18 18:07:21.878775",
+ "modified": "2021-11-06 10:14:15.394287",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "News",
