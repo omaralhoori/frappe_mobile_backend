@@ -19,6 +19,9 @@ def update_user_info():
                 "first_name": fullname
             })
             frappe.db.commit()
+            return {
+                "message": "Profile updated successfully"
+            }
         else:
             return {
                 "error": "Email is in use!"
