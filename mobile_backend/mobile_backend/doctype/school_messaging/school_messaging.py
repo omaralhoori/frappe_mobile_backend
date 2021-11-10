@@ -66,11 +66,28 @@ def delete_reply():
 		DELETE FROM `tabSchool Messages` WHERE name=%s AND parent=%s AND is_administration=0
 		""", (reply_name, message_name))
 		frappe.db.commit()
-		# reply = frappe.get_doc("School Messages", reply_name)
-		# if reply.is_administration == 0:
-		# 	reply.delete()
-		# doc.save(ignore_permissions=True)
-		# frappe.db.commit()
+
+@frappe.whitelist()
+def delete_replies():
+	message_name = frappe.form_dict.message_name
+	replies = frappe.form_dict.replies
+	print(replies)
+	reply_names = ""
+	for t in replies.keys():
+		reply_names += "'{}',".format(t)
+	reply_names = reply_names[:-1]
+	print(reply_names)
+	doc = frappe.get_doc("School Messaging", message_name)
+	if doc:
+		if doc.parent_name != frappe.session.user:
+			frappe.local.response['http_status_code'] = 403
+			return "You are not allowed to delete this message"
+		frappe.db.sql("""
+		DELETE FROM `tabSchool Messages` WHERE name IN ({}) AND parent=%s AND is_administration=0
+		""".format(reply_names), (message_name))
+		frappe.db.commit()
+	else:
+		frappe.local.response['http_status_code'] = 404
 
 @frappe.whitelist()
 def view_message():
