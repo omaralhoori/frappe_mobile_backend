@@ -21,6 +21,7 @@ class SchoolMessaging(Document):
 		messages = frappe.db.sql("""
 		SELECT name, message, sender_name, sending_date, is_read, is_administration
 		FROM `tabSchool Messages` WHERE parent=%s AND parenttype="School Messaging"
+		ORDER BY sending_date
 		""", (self.name), as_dict=True)
 		return messages
 
