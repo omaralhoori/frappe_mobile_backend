@@ -71,12 +71,9 @@ def delete_reply():
 def delete_replies():
 	message_name = frappe.form_dict.message_name
 	replies = frappe.form_dict.replies
-	print(replies)
-	reply_names = ""
-	for t in replies.keys():
-		reply_names += "'{}',".format(t)
-	reply_names = reply_names[:-1]
-	print(reply_names)
+	# for t in replies.keys():
+	# 	reply_names += "'{}',".format(t)
+	# reply_names = reply_names[:-1]
 	doc = frappe.get_doc("School Messaging", message_name)
 	if doc:
 		if doc.parent_name != frappe.session.user:
@@ -84,7 +81,7 @@ def delete_replies():
 			return "You are not allowed to delete this message"
 		frappe.db.sql("""
 		DELETE FROM `tabSchool Messages` WHERE name IN ({}) AND parent=%s AND is_administration=0
-		""".format(reply_names), (message_name))
+		""".format(replies), (message_name))
 		frappe.db.commit()
 	else:
 		frappe.local.response['http_status_code'] = 404
