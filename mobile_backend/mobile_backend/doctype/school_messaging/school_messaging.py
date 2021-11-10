@@ -50,6 +50,27 @@ def add_reply():
 		doc.status = 'Not seen'
 		doc.save(ignore_permissions=True)
 		frappe.db.commit()
+		return {
+			"name": rec.name
+		}
+
+@frappe.whitelist()
+def delete_reply():
+	message_name = frappe.form_dict.message_name
+	reply_name = frappe.form_dict.reply_name
+	doc = frappe.get_doc("School Messaging", message_name)
+	if doc:
+		if doc.parent_name != frappe.session.user:
+			return "You are not allowed to delete this message"
+		frappe.db.sql("""
+		DELETE FROM `tabSchool Messages` WHERE name=%s AND parent=%s AND is_administration=0
+		""", (reply_name, message_name))
+		frappe.db.commit()
+		# reply = frappe.get_doc("School Messages", reply_name)
+		# if reply.is_administration == 0:
+		# 	reply.delete()
+		# doc.save(ignore_permissions=True)
+		# frappe.db.commit()
 
 @frappe.whitelist()
 def view_message():
