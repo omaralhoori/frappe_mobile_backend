@@ -8,16 +8,20 @@ from frappe.model.document import Document
 from frappe.utils.dateutils import datetime
 class SchoolMessaging(Document):
 	def get_messages(self):
-		messages = []
-		for message in self.messages:
-			messages.append({
-				"name": message.name,
-				"message": message.message,
-				"sender_name": message.sender_name,
-				"sending_date": message.sending_date,
-				"is_read": message.is_read,
-				"is_administration": message.is_administration
-			})
+		# messages = []
+		# for message in self.messages:
+		# 	messages.append({
+		# 		"name": message.name,
+		# 		"message": message.message,
+		# 		"sender_name": message.sender_name,
+		# 		"sending_date": message.sending_date,
+		# 		"is_read": message.is_read,
+		# 		"is_administration": message.is_administration
+		# 	})
+		messages = frappe.db.sql("""
+		SELECT name, message, sender_name, sending_date, is_read, is_administration
+		FROM `tabSchool Messages` WHERE parent=%s AND parenttype="School Messaging"
+		""", (self.name), as_dict=True)
 		return messages
 
 
