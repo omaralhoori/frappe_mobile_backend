@@ -35,13 +35,22 @@ def get_user_data():
 @frappe.whitelist()
 def get_parent_data():
     user = frappe.session.user
-    data = frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
+    data = frappe.db.sql("""
+        SELECT p.contract_no, b.branch_code, b.branch_name, y.year_name FROM `tabSchool Parent` as p
+        INNER JOIN `tabSchool Branch` as b ON p.branch=b.name
+        INNER JOIN `tabSchool Year` as y ON p.year=y.name
+        WHERE p.name=%s
+    """, user, as_dict=True)
+    #frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
     students = frappe.db.sql("""
-        SELECT student_no, student_name, class, section
-        FROM `tabSchool Student`
+        SELECT s.student_no, s.student_name, c.class_code, c.class_name, se.section_code, se.section_name
+        FROM `tabSchool Student` as s
+        INNER JOIN `tabSchool Class` as c ON s.class=c.name
+        INNER JOIN `tabSchool Section` as se ON s.section=se.name
         WHERE parent_no=%s
     """, user, as_dict=True)
     #frappe.db.get_list("School Student", filters = {"parent_no": user}, fields=["student_no", "student_name", "class", "section"])
-    if data:
+    if len(data) > 0:
+        data = data[0]
         data["students"] = students
     return data if data else {}
