@@ -19,11 +19,36 @@ def get_transactions_pdf():
     if (parent != frappe.session.user and
         frappe.db.get_value("User", frappe.session.user, "user_type")=="Website User"):
         frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
+    
+    #hosturl = frappe.utils.()
+    context = get_dict_data(branch, year, contract, student)
+    context["hosturl"] = "http://{}".format(frappe.local.request.host)
+    html = frappe.render_template('templates/transaction_report.html', context) #response.content
+    name = branch+"-"+ year + "-" + contract + ".html"
+    # with open( name.replace("/", "-"), "w+") as f:
+    #     f.write(html)
+    options = { 'quiet': '' }
+    frappe.local.response.filename = name
+    frappe.local.response.filecontent = pdfkit.from_string(html, False,  options=options) #get_pdf(html)
+    frappe.local.response.type = "pdf"
+
+@frappe.whitelist()
+def get_user_payments():
+    student=frappe.local.form_dict.PSTD
+    user = frappe.session.user
+    res = frappe.db.get_value("School Parent", user, ["branch", "year", "contract_no"])
+    if not res:
+        frappe.local.response['http_status_code'] = 404
+        return {}
+    branch, year, contract_no = res
+    return get_dict_data(branch, year, contract_no, student)
+
+def get_dict_data(branch, year, contract_no, student=None):
     if student:
-        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(branch, year, contract, student)
+        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(branch, year, contract_no, student)
     else:
-        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}'.format(branch, year, contract)
-    res = requests.get(url.format(branch, year, contract))
+        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}'.format(branch, year, contract_no)
+    res = requests.get(url)
     tree = ElementTree.fromstring(res.content)
     parent = tree.find("Parent")
     students = parent.findall("Student")
@@ -51,25 +76,14 @@ def get_transactions_pdf():
     BRNCODE = parent.find('BRNCODE').text
     CONNO = parent.find('CONNO').text
     CONNAME = parent.find('CONNAME').text
-    #hosturl = frappe.utils.()
-    html = frappe.render_template('templates/transaction_report.html', {
+    return {
         "student_list": student_list,
         "YEARNAME": YEARNAME,
         "BRNNAME": BRNNAME,
         "BRNCODE": BRNCODE,
         "CONNO": CONNO,
         "CONNAME": CONNAME,
-        "hosturl": "http://{}".format(frappe.local.request.host),
-    }) #response.content
-    name = branch+"-"+ year + "-" + contract + ".html"
-    # with open( name.replace("/", "-"), "w+") as f:
-    #     f.write(html)
-    options = { 'quiet': '' }
-    frappe.local.response.filename = name
-    frappe.local.response.filecontent = pdfkit.from_string(html, False,  options=options) #get_pdf(html)
-    frappe.local.response.type = "pdf"
-
-
+    }
 
 def get_transactions(student_transaction):
     transactions = []
