@@ -33,6 +33,28 @@ def get_transactions_pdf():
     frappe.local.response.type = "pdf"
 
 @frappe.whitelist()
+def get_parent_transactions_pdf():
+    user = frappe.session.user
+    student=frappe.local.form_dict.PSTD
+    parent = frappe.db.get_value("School Parent",user, ["branch", "year", "contract_no"])
+    if not parent:#not(branch and year and contract):
+        frappe.throw(_("Not found."), frappe.DoesNotExistError)
+    
+    branch, year, contract = parent
+
+    #hosturl = frappe.utils.()
+    context = get_dict_data(branch, year, contract, student)
+    context["hosturl"] = "http://{}".format(frappe.local.request.host)
+    html = frappe.render_template('templates/transaction_report.html', context) #response.content
+    name = branch+"-"+ year + "-" + contract + ".html"
+    # with open( name.replace("/", "-"), "w+") as f:
+    #     f.write(html)
+    options = { 'quiet': '' }
+    frappe.local.response.filename = name
+    frappe.local.response.filecontent = pdfkit.from_string(html, False,  options=options) #get_pdf(html)
+    frappe.local.response.type = "pdf"
+
+@frappe.whitelist()
 def get_user_payments():
     student=frappe.local.form_dict.PSTD
     user = frappe.session.user
