@@ -39,6 +39,36 @@ def get_messages():
 		message["messages"] = doc.get_messages() if doc else []
 	return messages
 
+@frappe.whitelist()
+def get_message():
+	message_name = frappe.form_dict.message_name
+	message_type = frappe.form_dict.message_type
+	message = frappe.db.sql("""
+		SELECT name, title, creation, message_type, message_name, student_no, student_name
+		FROM `tabSchool Messaging`
+		WHERE parent_name=%s AND message_name=%s AND message_type=%s
+		LIMIT 1;
+	""", (frappe.session.user, message_name, message_type), as_dict=True)
+	#for message in messages:
+	if len(message) > 0:
+		message = message[0]
+	else:
+		frappe.local.response['http_status_code'] = 404
+		return
+	doc = frappe.get_doc("School Messaging", message["name"])
+	message["messages"] = doc.get_messages() if doc else []
+	return message
+
+
+@frappe.whitelist()
+def get_unread_messages():
+	user = frappe.session.user
+	return frappe.db.sql("""
+	SELECT COUNT(m2.parent_name) as unread_messages, m2.message_type FROM `tabSchool Messages` as m1
+		INNER JOIN `tabSchool Messaging`as m2 ON m1.parent=m2.name
+		WHERE m1.is_administration=1 AND m1.is_read=0 AND m2.parent_name=%s
+		GROUP BY m2.message_type, m2.parent_name;
+	""", user, as_dict=True)
 
 @frappe.whitelist()
 def add_reply():

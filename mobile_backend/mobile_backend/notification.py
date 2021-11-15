@@ -72,5 +72,6 @@ def send_http_notification(body):
         'Content-Type': 'application/json',
         'Authorization': frappe.local.conf.fcm_server_key,
       }
-    response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=json.dumps(body))
-    return response.json()
+    data = json.dumps(body)
+    response = requests.post("https://fcm.googleapis.com/fcm/send",headers = headers, data=data)
+    return response

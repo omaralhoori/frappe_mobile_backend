@@ -10,7 +10,11 @@ from mobile_backend.mobile_backend import notification
 
 class Announcement(Document):
 	def after_insert(self):
-		notification.send_topic_notification('announcement', 'New announcement', self.title)
+		data = {
+			"message_type": "Announcement",
+			"message_name": self.name
+		}
+		notification.send_topic_notification('announcement', 'New announcement', self.title,data )
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:

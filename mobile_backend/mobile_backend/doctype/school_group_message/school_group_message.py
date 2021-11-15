@@ -71,7 +71,10 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
 				device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
-				send_token_notification(device_token, title, message)
+				send_token_notification(device_token, title, message, {
+					"message_type": "School Group Message",
+					"message_name": name
+				})
 				frappe.db.commit()
 			else:
 				# frappe.db.set_value("School Messaging", message_name, {

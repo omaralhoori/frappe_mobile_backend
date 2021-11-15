@@ -9,7 +9,10 @@ from mobile_backend.mobile_backend import notification, utils
 
 class News(Document):
 	def after_insert(self):
-		notification.send_topic_notification('news', 'New news', self.title)
+		notification.send_topic_notification('news', 'New news', self.title, {
+			"message_type": "News",
+			"message_name": self.name
+		})
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:
