@@ -70,6 +70,15 @@ def get_all_contents():
 		{limit}
 	""".format(user=user, limit=LIMIT) ,as_dict=True)
 
+@frappe.whitelist(allow_guest=True)
+def get_contents_version():
+	return frappe.db.sql("""
+	SELECT type, name, version FROM
+		(SELECT 'Announcement' as type, ta.name, ta.version FROM `tabAnnouncement` AS ta
+		UNION
+		SELECT 'News' as type, tn.name, tn.version FROM `tabNews` AS tn
+		) as all_content;
+	""", as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
 def get_announcements():

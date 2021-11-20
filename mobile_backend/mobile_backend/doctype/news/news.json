@@ -19,7 +19,8 @@
   "section_break_9",
   "comments",
   "likes_table",
-  "views_table"
+  "views_table",
+  "version"
  ],
  "fields": [
   {
@@ -112,9 +113,16 @@
    "fieldname": "attach",
    "fieldtype": "Attach Image",
    "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "version",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Version"
   }
  ],
- "modified": "2021-11-06 10:14:15.394287",
+ "modified": "2021-11-20 21:12:52.192047",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "News",
