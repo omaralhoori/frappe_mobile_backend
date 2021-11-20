@@ -39,6 +39,11 @@ class Announcement(Document):
 def get_all_contents():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
+	skip = frappe.form_dict.skip
+	limit = frappe.form_dict.limit
+	LIMIT = ""
+	if skip is not None and limit is not None:
+		LIMIT = "LIMIT {},{}".format(skip, limit)
 	return frappe.db.sql("""
 	SELECT type, name, title, description, creation, likes, views, approved_comments, is_viewed, is_liked, file_url FROM
 		(SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, ftable.file_url,
@@ -62,7 +67,8 @@ def get_all_contents():
 		ON tn.name=ftable.attached_to_name
 		) as all_content
 		ORDER BY creation DESC
-	""".format(user=user) ,as_dict=True)
+		{limit}
+	""".format(user=user, limit=LIMIT) ,as_dict=True)
 
 
 @frappe.whitelist(allow_guest=True)
