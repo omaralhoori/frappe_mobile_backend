@@ -27,6 +27,9 @@ frappe.ui.form.on('Announcement', {
 		}else{
 			frappe.add_attachment(frm)
 		}
+	},
+	before_save: function (frm){
+		frm.set_value("version", frm.doc.version + 1);
 	}
 });
 
