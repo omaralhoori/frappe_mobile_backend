@@ -11,8 +11,8 @@ from mobile_backend.mobile_backend import notification
 class Announcement(Document):
 	def after_insert(self):
 		data = {
-			"message_type": "Announcement",
-			"message_name": self.name
+			"type": "Announcement",
+			"name": self.name
 		}
 		notification.send_topic_notification('announcement', 'New announcement', self.title,data )
 	def before_save(self):

@@ -68,8 +68,8 @@ def add_direct_message(title, message, branch, year, contract , name, site, atta
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
 				send_token_notification(device_token, title, message, {
-					"message_type": "School Direct Message",
-					"message_name": name
+					"type": "School Direct Message",
+					"name": name
 				})
 			else:
 				doc = frappe.get_doc("School Messaging", message_name)
