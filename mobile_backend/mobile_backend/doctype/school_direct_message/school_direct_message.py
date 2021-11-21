@@ -9,10 +9,14 @@ from frappe.model.document import Document
 from mobile_backend.mobile_backend.utils import get_current_site_name
 from mobile_backend.mobile_backend.notification import send_token_notification
 from frappe.utils.dateutils import datetime
+from frappe.desk.form.load import get_attachments
 
 class SchoolDirectMessage(Document):
 	def on_update(self):
-		add_direct_message(self.title, self.message, self.branch, self.year, self.contract, self.name, get_current_site_name())
+		attachments = get_attachments(self.doctype, self.name)
+		attachments_list = [attach.file_url for attach in attachments]
+		add_direct_message(self.title, self.message, self.branch, self.year, self.contract, self.name, 
+		get_current_site_name(), attachments=";".join(attachments_list), thumbnail=self.thumbnail)
 
 	def on_trash(self):
 		delete_direct_message(self.name)
@@ -31,7 +35,7 @@ def delete_direct_message(name):
 # 	""", (name))
 # 	frappe.db.commit()
 
-def add_direct_message(title, message, branch, year, contract , name, site):
+def add_direct_message(title, message, branch, year, contract , name, site, attachments="", thumbnail=""):
 	filters = {
 		"branch": branch,
 		"year": year,
@@ -53,7 +57,9 @@ def add_direct_message(title, message, branch, year, contract , name, site):
 					"title": title,
 					"message_name": name,
 					"branch": branch,
-					"message_type": "School Direct Message"
+					"message_type": "School Direct Message",
+					"attachments": attachments,
+					"thumbnail": thumbnail
 				})
 				row = doc.append("messages")
 				row.sender_name = "Administration"
@@ -68,6 +74,8 @@ def add_direct_message(title, message, branch, year, contract , name, site):
 			else:
 				doc = frappe.get_doc("School Messaging", message_name)
 				doc.title = title
+				doc.thumbnail = thumbnail
+				doc.attachments = attachments
 				for _message in doc.messages:
 					if _message.is_administration == 1:
 						_message.message = message

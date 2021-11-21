@@ -5,9 +5,15 @@
  "engine": "InnoDB",
  "field_order": [
   "branch",
+  "column_break_2",
   "year",
+  "column_break_4",
   "contract",
+  "section_break_6",
   "title",
+  "column_break_8",
+  "thumbnail",
+  "section_break_10",
   "message"
  ],
  "fields": [
@@ -45,9 +51,34 @@
    "fieldname": "message",
    "fieldtype": "Text",
    "label": "Message"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "thumbnail",
+   "fieldtype": "Attach Image",
+   "label": "Message Thumbnail"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2021-10-27 08:10:19.382904",
+ "modified": "2021-11-21 21:51:46.882683",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Direct Message",

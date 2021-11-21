@@ -11,6 +11,9 @@
   "section",
   "section_break_6",
   "title",
+  "column_break_8",
+  "thumbnail",
+  "section_break_10",
   "message"
  ],
  "fields": [
@@ -58,9 +61,22 @@
    "fieldtype": "Link",
    "label": "Class",
    "options": "School Class"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "thumbnail",
+   "fieldtype": "Attach Image",
+   "label": "Message Thumbnail"
+  },
+  {
+   "fieldname": "section_break_10",
+   "fieldtype": "Section Break"
   }
  ],
- "modified": "2021-10-26 12:11:16.021439",
+ "modified": "2021-11-21 21:17:23.181670",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Group Message",

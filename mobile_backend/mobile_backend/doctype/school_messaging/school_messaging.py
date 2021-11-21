@@ -29,7 +29,7 @@ class SchoolMessaging(Document):
 @frappe.whitelist()
 def get_messages():
 	messages = frappe.db.sql("""
-		SELECT name, title, creation, message_type, message_name, student_no, student_name
+		SELECT name, title, creation, message_type, message_name, student_no, student_name, thumbnail, attachments
 		FROM `tabSchool Messaging`
 		WHERE parent_name=%s
 		ORDER BY creation DESC

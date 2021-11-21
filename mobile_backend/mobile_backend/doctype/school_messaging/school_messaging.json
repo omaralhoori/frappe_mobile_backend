@@ -15,7 +15,9 @@
   "status",
   "messages_section",
   "messages",
-  "messaging_container"
+  "messaging_container",
+  "thumbnail",
+  "attachments"
  ],
  "fields": [
   {
@@ -89,9 +91,21 @@
    "in_standard_filter": 1,
    "label": "Status",
    "options": "Seen\nNot seen"
+  },
+  {
+   "fieldname": "thumbnail",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Message Thumbnail"
+  },
+  {
+   "fieldname": "attachments",
+   "fieldtype": "Text",
+   "hidden": 1,
+   "label": "Attachments"
   }
  ],
- "modified": "2021-11-03 07:31:53.148580",
+ "modified": "2021-11-21 21:43:58.508121",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Messaging",

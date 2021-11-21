@@ -9,12 +9,16 @@ from frappe.model.document import Document
 from mobile_backend.mobile_backend.notification import send_token_notification
 from mobile_backend.mobile_backend.utils import get_current_site_name
 from frappe.utils.dateutils import datetime
+from frappe.desk.form.load import get_attachments
 
 class SchoolGroupMessage(Document):
 	def on_update(self):
+		attachments = get_attachments(self.doctype, self.name)
+		attachments_list = [attach.file_url for attach in attachments]
 		kwargs = {
 			"name":self.name,"title":self.title, "message":self.message, "branch":self.branch,
-			"class_code":self.class_code, "section_code":self.section, "site": get_current_site_name()
+			"class_code":self.class_code, "section_code":self.section, "site": get_current_site_name(),
+			"attachments": ";".join(attachments_list), "thumbnail": self.thumbnail
 		}
 		thread = threading.Thread(target=add_group_message, kwargs=kwargs)
 		thread.start()
@@ -35,7 +39,7 @@ def delete_group_message(name):
 # 	""", (name))
 # 	frappe.db.commit()
 
-def add_group_message(title, message, branch, name, site, class_code=None, section_code=None):
+def add_group_message(title, message, branch, name, site, class_code=None, section_code=None, attachments="", thumbnail=""):
 	frappe.init(site=site)
 	frappe.connect()
 	filters = {
@@ -62,7 +66,9 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 					"title": title,
 					"branch": branch,
 					"message_name": name,
-					"message_type": "School Group Message"
+					"message_type": "School Group Message",
+					"attachments": attachments,
+					"thumbnail": thumbnail
 				})
 				row = doc.append("messages")
 				row.sender_name = "Administration"
@@ -83,6 +89,8 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				# })
 				doc = frappe.get_doc("School Messaging", message_name)
 				doc.title = title
+				doc.thumbnail = thumbnail
+				doc.attachments = attachments
 				for _message in doc.messages:
 					if _message.is_administration == 1:
 						_message.message = message
