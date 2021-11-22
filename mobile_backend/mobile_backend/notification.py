@@ -3,11 +3,31 @@ import frappe
 import requests
 import json
 
+TOKEN_SEP = '/;/'
 @frappe.whitelist()
 def update_device_token():
     user = frappe.session.user
     token = frappe.form_dict.device_token
-    frappe.db.set_value("School Parent", user, {"device_token":token})
+    stored_token = frappe.db.get_value("School Parent", user, "device_token")
+    try:
+        if not stored_token or stored_token=='':
+            frappe.db.set_value("School Parent", user, {"device_token":token})
+        else:
+            if not token in stored_token:
+                frappe.db.set_value("School Parent", user, {"device_token":stored_token + TOKEN_SEP + token})
+    except:
+        frappe.local.response['http_status_code'] = 500
+        return {}
+    frappe.db.commit()
+
+@frappe.whitelist()
+def delete_device_token():
+    user = frappe.session.user
+    try:
+        frappe.db.set_value("School Parent", user, {"device_token":''})
+    except:
+        frappe.local.response['http_status_code'] = 500
+        return {}
     frappe.db.commit()
 
 @frappe.whitelist(allow_guest=True)
@@ -17,18 +37,24 @@ def send_notification():
     contract = frappe.form_dict.contract
     title = frappe.form_dict.title
     message = frappe.form_dict.message
-    token = frappe.db.get_value("School Parent", {
+    tokens = frappe.db.get_value("School Parent", {
         "branch": branch,
         "year": year,
         "contract_no": contract
     }, ["device_token"])
-    if token:
-        return send_token_notification(token, title, message)
+    if tokens:
+        return send_multiple_notification(tokens, title, message)#send_token_notification(token, title, message)
     else:
-        return "token not found"
+        frappe.local.response['http_status_code'] = 500
+        return {
+            "server_error": "token not found"
+        }
 
 
-def send_multiple_notification(tokens, title, message, data=None):
+def send_multiple_notification(token_str, title, message, data=None):
+    if not token_str or len(token_str) == 0:
+        return
+    tokens = token_str.split(TOKEN_SEP)
     if not tokens or len(tokens) == 0:
         return
     body = {

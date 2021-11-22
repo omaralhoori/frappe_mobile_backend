@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import threading
 import frappe
 from frappe.model.document import Document
-from mobile_backend.mobile_backend.notification import send_token_notification
+from mobile_backend.mobile_backend.notification import send_multiple_notification
 from mobile_backend.mobile_backend.utils import get_current_site_name
 from frappe.utils.dateutils import datetime
 from frappe.desk.form.load import get_attachments
@@ -77,9 +77,9 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
 				device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
-				send_token_notification(device_token, title, message, {
+				send_multiple_notification(device_token, title, message, {
 					"type": "School Group Message",
-					"name": name
+					"name": doc.name
 				})
 				frappe.db.commit()
 			else:

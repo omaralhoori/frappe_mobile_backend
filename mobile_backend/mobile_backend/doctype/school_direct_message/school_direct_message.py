@@ -7,7 +7,7 @@ from datetime import date
 import frappe
 from frappe.model.document import Document
 from mobile_backend.mobile_backend.utils import get_current_site_name
-from mobile_backend.mobile_backend.notification import send_token_notification
+from mobile_backend.mobile_backend.notification import send_multiple_notification
 from frappe.utils.dateutils import datetime
 from frappe.desk.form.load import get_attachments
 
@@ -67,9 +67,10 @@ def add_direct_message(title, message, branch, year, contract , name, site, atta
 				row.is_administration = 1
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
-				send_token_notification(device_token, title, message, {
+				print(device_token)
+				send_multiple_notification(device_token, title, message, {
 					"type": "School Direct Message",
-					"name": name
+					"name": doc.name
 				})
 			else:
 				doc = frappe.get_doc("School Messaging", message_name)
