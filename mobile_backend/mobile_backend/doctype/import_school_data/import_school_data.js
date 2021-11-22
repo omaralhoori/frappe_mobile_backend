@@ -2,9 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Import School Data', {
-	// refresh: function(frm) {
-
-	// },
+	before_load: function(frm) {
+		frm.disable_save();
+	},
 	// refresh: function(frm) {
 
 	// },
@@ -14,7 +14,7 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_branch_data",
 			args: {
-				url: frm.doc.branch_url
+				//url: frm.doc.branch_url
 			},
 			callback: (res) => {
 				frappe.hide_progress();
@@ -27,7 +27,7 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_year_data",
 			args: {
-				url: frm.doc.year_url
+				//url: frm.doc.year_url
 			},
 			callback: (res) => {
 				frappe.hide_progress();
@@ -40,7 +40,7 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_class_data",
 			args: {
-				url: frm.doc.class_url
+				//url: frm.doc.class_url
 			},
 			callback: (res) => {
 				frappe.hide_progress();
@@ -53,7 +53,7 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_section_data",
 			args: {
-				url: frm.doc.section_url
+				//url: frm.doc.section_url
 			},
 			callback: (res) => {
 				frappe.hide_progress();
@@ -66,7 +66,8 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_parent_data",
 			args: {
-				url: frm.doc.parent_url,
+				branch: frm.doc.parent_branch,
+				year: frm.doc.parent_year,
 				password: frm.doc.default_password,
 			},
 			callback: (res) => {
@@ -80,7 +81,8 @@ frappe.ui.form.on('Import School Data', {
 			doc:frm.doc,
 			method: "import_student_data",
 			args: {
-				url: frm.doc.student_url
+				branch: frm.doc.student_branch,
+				year: frm.doc.student_year,
 			},
 			callback: (res) => {
 				frappe.hide_progress();
