@@ -30,7 +30,7 @@ def update_user_info():
 @frappe.whitelist()
 def get_user_data():
     user = frappe.session.user
-    return frappe.db.get_value("User", user, ["email", "full_name"], as_dict=True)
+    return frappe.db.get_value("User", user, ["email", "full_name", "user_image"], as_dict=True)
 
 @frappe.whitelist()
 def get_parent_data():
