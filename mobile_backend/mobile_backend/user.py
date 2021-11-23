@@ -43,7 +43,7 @@ def get_parent_data():
     """, user, as_dict=True)
     #frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
     students = frappe.db.sql("""
-        SELECT s.student_no, s.student_name, c.class_code, c.class_name, se.section_code, se.section_name
+        SELECT s.student_no, s.student_name, c.class_code, c.class_name, se.section_code, se.section_name, s.student_gender
         FROM `tabSchool Student` as s
         INNER JOIN `tabSchool Class` as c ON s.class=c.name
         INNER JOIN `tabSchool Section` as se ON s.section=se.name
