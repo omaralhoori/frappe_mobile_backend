@@ -99,7 +99,10 @@ let add_message = (frm, wrapper, name, msg, sender, is_read, is_admin, sending_d
 	</div>`).appendTo(wrapper)
 	msg_wapper.find('.message').text(msg)
 	msg_wapper.find('.delete-message').click(() => {
-		//var tbl = frm.doc.messages || [];
+		frappe.warn(__('Confirm'),
+			__('Are you sure you want to delete this message?'),
+			() => {
+				//var tbl = frm.doc.messages || [];
 		msg_wapper.html('');
 		// for(let i=0; i<tbl.length; i++){
 		// 	if(tbl[i].name == name)
@@ -115,5 +118,11 @@ let add_message = (frm, wrapper, name, msg, sender, is_read, is_admin, sending_d
 		})
 		refresh_field("messages")
 		frm.save()
+			},
+			__('Continue'),
+			true // Sets dialog as minimizable
+		)
+
+		
 	})
 }
