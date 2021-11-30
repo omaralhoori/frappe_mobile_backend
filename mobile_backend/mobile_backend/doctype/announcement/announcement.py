@@ -162,7 +162,10 @@ def get_comments():
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
 	return frappe.db.sql("""
-		SELECT user_name, name, comment, user=%s as is_owned FROM `tabMobile Comment` WHERE parent=%s AND parenttype='Announcement' AND status='Approved'
+		SELECT IF(tu.full_name IS NULL, "Guest", tu.full_name) as user_name,tu.user_image, tmc.name, tmc.comment, tmc.user=%s as is_owned
+		FROM `tabMobile Comment` AS tmc
+		LEFT JOIN `tabUser` AS tu ON tmc.user=tu.name
+		WHERE tmc.parent=%s AND tmc.parenttype='Announcement' AND tmc.status='Approved'
 	""",(user, announcement), as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
