@@ -54,3 +54,14 @@ def get_parent_data():
         data = data[0]
         data["students"] = students
     return data if data else {}
+
+
+@frappe.whitelist()
+def get_user_type():
+    user = frappe.session.user
+    teacher = frappe.db.get_value("School Teacher", user, ["name"])
+    parent = frappe.get_value("School Parent", user, ["name"])
+    return {
+        "parent": True if parent else False,
+        "teacher": True if teacher else False
+    }
