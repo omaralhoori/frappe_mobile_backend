@@ -11,6 +11,7 @@ import requests
 from xml.etree import ElementTree
 
 class ImportSchoolData(Document):
+	@frappe.whitelist()
 	def import_branch_data(self):
 		rel_link = '/reports/rwservlet?report=STRMOBBRN'
 		data_settings = frappe.get_doc("School Settings")
@@ -55,7 +56,7 @@ class ImportSchoolData(Document):
 			except:
 				pass
 		return {}
-
+	@frappe.whitelist()
 	def import_year_data(self):
 		rel_link = '/reports/rwservlet?report=STRMOBYER'
 		data_settings = frappe.get_doc("School Settings")
@@ -91,7 +92,7 @@ class ImportSchoolData(Document):
 			except:
 				pass
 		return {}
-
+	@frappe.whitelist()
 	def import_class_data(self):
 		rel_link = '/reports/rwservlet?report=STRMOBCLS'
 		data_settings = frappe.get_doc("School Settings")
@@ -127,7 +128,7 @@ class ImportSchoolData(Document):
 			except:
 				pass
 		return {}
-
+	@frappe.whitelist()
 	def import_section_data(self):
 		rel_link = '/reports/rwservlet?report=STRMOBSEC'
 		data_settings = frappe.get_doc("School Settings")
@@ -171,7 +172,7 @@ class ImportSchoolData(Document):
 			except:
 				pass
 		return {}
-
+	@frappe.whitelist()
 	def import_parent_data(self, branch, year, password):
 		rel_link = '/reports/rwservlet?report=STRMOBCON'
 		data_settings = frappe.get_doc("School Settings")
@@ -195,7 +196,7 @@ class ImportSchoolData(Document):
 		parents = tree.findall('Parent')
 		#self.enqueue_add_parents(parents, password)
 		add_parents(parents, password)
-
+	@frappe.whitelist()
 	def import_student_data(self, branch, year):
 		rel_link = '/reports/rwservlet?report=STRMOBSTD'
 		data_settings = frappe.get_doc("School Settings")

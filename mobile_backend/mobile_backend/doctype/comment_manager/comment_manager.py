@@ -7,6 +7,7 @@ import frappe
 from frappe.model.document import Document
 
 class CommentManager(Document):
+	@frappe.whitelist()
 	def get_comments(self, document, status):
 		filters = {
 			"parenttype": document,
@@ -21,7 +22,7 @@ class CommentManager(Document):
 			tbl_comment.user = comment["user"]
 			tbl_comment.status = comment["status"]
 			tbl_comment.name = comment["name"]
-
+	@frappe.whitelist()
 	def set_status(self, comments, new_status, document):
 		for comment in comments:
 			frappe.db.set_value("Mobile Comment", comment, {"status":new_status})
