@@ -67,7 +67,7 @@ def add_direct_message(title, message, branch, year, contract , name, site, atta
 				row.is_administration = 1
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
-				print(device_token)
+				#print(device_token)
 				send_multiple_notification(device_token, title, message, {
 					"type": "School Direct Message",
 					"name": doc.name
