@@ -18,10 +18,11 @@ def get_context(context):
     if (parent != frappe.session.user and
         frappe.db.get_value("User", frappe.session.user, "user_type")=="Website User"):
         frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
+    ip_address, user_id = frappe.db.get_single_value('School Settings', ['data_url', 'user_id'])
     if student:
-        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(branch, year, contract, student)
+        url = '{}/reports/rwservlet?report=STRMOBBAL&userid={}&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(ip_address, user_id, branch, year, contract, student)
     else:
-        url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}'.format(branch, year, contract)
+        url = '{}/reports/rwservlet?report=STRMOBBAL&userid={}&PBRN={}&PYEAR={}&PCONNO={}'.format(ip_address, user_id, branch, year, contract)
     res = requests.get(url.format(branch, year, contract))
     tree = ElementTree.fromstring(res.content)
     parent = tree.find("Parent")
