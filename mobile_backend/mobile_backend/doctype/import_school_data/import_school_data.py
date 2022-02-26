@@ -31,11 +31,16 @@ class ImportSchoolData(Document):
 		tree = ElementTree.fromstring(res.content)
 		for branch in tree.findall('Branch'):
 			try:
-				code = branch.find('CS_BRN_CODE').text
-				name = branch.find('CS_BRN_ADESC').text
-				tel = branch.find('CS_BRN_TEL').text
-				fax = branch.find('CS_BRN_FAX').text
-				address = branch.find('CS_BRN_ADD').text
+				# code = branch.find('CS_BRN_CODE').text
+				# name = branch.find('CS_BRN_ADESC').text
+				# tel = branch.find('CS_BRN_TEL').text
+				# fax = branch.find('CS_BRN_FAX').text
+				# address = branch.find('CS_BRN_ADD').text
+				code = branch.find('BRNCODE').text
+				name = branch.find('BRNNAME').text
+				tel = branch.find('BRNTEL').text
+				fax = branch.find('BRNFAX').text
+				address = branch.find('BRNADD').text
 				if not frappe.db.exists('School Branch', code):
 					frappe.get_doc({
 						"doctype": "School Branch",
