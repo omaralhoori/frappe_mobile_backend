@@ -14,7 +14,9 @@ class Announcement(Document):
 			"type": "Announcement",
 			"name": self.name
 		}
-		notification.send_topic_notification('announcement', 'New announcement', self.title,data )
+		settings = frappe.get_doc("School Settings")
+		title = settings.announcement_title if settings.announcement_title else "'New announcement'"
+		notification.send_topic_notification('announcement', title, self.title,data )
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:

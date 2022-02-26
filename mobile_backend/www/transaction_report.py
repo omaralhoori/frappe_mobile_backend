@@ -18,7 +18,8 @@ def get_context(context):
     if (parent != frappe.session.user and
         frappe.db.get_value("User", frappe.session.user, "user_type")=="Website User"):
         frappe.throw(_("You are not permitted to access this page."), frappe.PermissionError)
-    ip_address, user_id = frappe.db.get_single_value('School Settings', ['data_url', 'user_id'])
+    settingsDoc = frappe.get_doc('School Settings')
+    ip_address, user_id = settingsDoc.data_url, settingsDoc.user_id
     if student:
         url = '{}/reports/rwservlet?report=STRMOBBAL&userid={}&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(ip_address, user_id, branch, year, contract, student)
     else:
@@ -32,6 +33,7 @@ def get_context(context):
         transactions = get_transactions(student.find('StudentTransaction'))
         extra_amount = get_extra_amounts(student.find('StudentExtraAmount'))
         installments = get_installments(student.find('StudentInstallment'))
+        #installments = get_installments(parent.find('StudentInstallment'))
         fees = get_fees(student.find('StudentFees'))
         student_list.append({
             "STDNO": student.find("STDNO").text,
@@ -52,7 +54,8 @@ def get_context(context):
     context.BRNCODE = parent.find('BRNCODE').text
     context.CONNO = parent.find('CONNO').text
     context.CONNAME = parent.find('CONNAME').text
-
+    settings = frappe.get_doc("School Settings")
+    context.app_name = settings.school_name
     return context
 
 
