@@ -74,7 +74,8 @@ def get_dict_data(branch, year, contract_no, student=None):
     #     url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(branch, year, contract_no, student)
     # else:
     #     url = 'http://202.147.198.58:8888/reports/rwservlet?report=STRMOBBAL&userid=MOBUSR/F1T_2O21_Y5N@SCHOOLDB&PBRN={}&PYEAR={}&PCONNO={}'.format(branch, year, contract_no)
-    ip_address, user_id = frappe.db.get_single_value('School Settings', ['data_url', 'user_id'])
+    settings = frappe.get_doc('School Settings')
+    ip_address, user_id = settings.data_url, settings.user_id
     if student:
         url = '{}/reports/rwservlet?report=STRMOBBAL&userid={}&PBRN={}&PYEAR={}&PCONNO={}&PSTD={}'.format(ip_address, user_id, branch, year, contract_no, student)
     else:

@@ -28,6 +28,12 @@ def update_user_info():
             }
 
 @frappe.whitelist()
+def update_user_pwd():
+    user = frappe.form_dict.user
+    pwd = frappe.form_dict.password
+    update_password(user, pwd)
+
+@frappe.whitelist()
 def get_user_data():
     user = frappe.session.user
     return frappe.db.get_value("User", user, ["email", "full_name", "user_image"], as_dict=True)
@@ -43,7 +49,7 @@ def get_parent_data():
     """, user, as_dict=True)
     #frappe.db.get_value("School Parent", user, ["contract_no", "branch", "year"], as_dict=True)
     students = frappe.db.sql("""
-        SELECT s.student_no, s.student_name, c.class_code, c.class_name, se.section_code, se.section_name, s.student_gender
+        SELECT s.student_no, s.student_name, c.class_code, c.class_name, se.section_code, se.section_name, IFNULL(s.student_gender, 'Male')
         FROM `tabSchool Student` as s
         INNER JOIN `tabSchool Class` as c ON s.class=c.name
         INNER JOIN `tabSchool Section` as se ON s.section=se.name
@@ -60,7 +66,7 @@ def get_parent_data():
 def get_user_type():
     user = frappe.session.user
     teacher = frappe.db.get_value("School Teacher", user, ["name"])
-    parent = frappe.get_value("School Parent", user, ["name"])
+    parent = frappe.db.get_value("School Parent", user, ["name"])
     return {
         "parent": True if parent else False,
         "teacher": True if teacher else False

@@ -46,8 +46,8 @@ def get_all_contents():
 	LIMIT = ""
 	if skip is not None and limit is not None:
 		LIMIT = "LIMIT {},{}".format(skip, limit)
-	return frappe.db.sql("""
-	SELECT type, name, title, description, creation, likes, views, approved_comments, is_viewed, is_liked, file_url FROM
+	contents = frappe.db.sql("""
+	SELECT type, name, title, IFNULL(description, '') as description, creation, likes, views, approved_comments, is_viewed, is_liked, IFNULL(file_url, '') as file_url FROM
 		(SELECT 'Announcement' as type, ta.name, ta.title, ta.description, ta.creation, ta.likes, ta.views, ta.approved_comments, ftable.file_url,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked from `tabAnnouncement` as ta
 		LEFT JOIN `tabMobile Like` as tl ON (ta.name<=>tl.parent AND tl.parenttype='Announcement' AND tl.user="{user}")
@@ -71,6 +71,9 @@ def get_all_contents():
 		ORDER BY creation DESC
 		{limit}
 	""".format(user=user, limit=LIMIT) ,as_dict=True)
+
+	print(contents)
+	return contents
 
 @frappe.whitelist(allow_guest=True)
 def get_contents_version():
