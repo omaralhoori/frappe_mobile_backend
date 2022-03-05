@@ -1,0 +1,182 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-03 14:00:09.339466",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "first_semester_section",
+  "first_semester",
+  "first_periods_section",
+  "first_period_1",
+  "column_break_6",
+  "first_period_2",
+  "column_break_8",
+  "first_period_3",
+  "column_break_10",
+  "first_period_4",
+  "column_break_12",
+  "first_all_periods",
+  "second_semester_section",
+  "second_semester",
+  "second_periods_section",
+  "second_period_1",
+  "column_break_18",
+  "second_period_2",
+  "column_break_20",
+  "second_period_3",
+  "column_break_22",
+  "second_period_4",
+  "column_break_24",
+  "second_all_periods"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_semester_section",
+   "fieldtype": "Section Break",
+   "label": "First Semester"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_semester",
+   "fieldtype": "Check",
+   "label": "First Semester"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_12",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_periods_section",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "first_period_1",
+   "fieldtype": "Check",
+   "label": "Period 1"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_period_2",
+   "fieldtype": "Check",
+   "label": "Period 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_period_3",
+   "fieldtype": "Check",
+   "label": "Period 3"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_period_4",
+   "fieldtype": "Check",
+   "label": "Period 4"
+  },
+  {
+   "default": "0",
+   "fieldname": "first_all_periods",
+   "fieldtype": "Check",
+   "label": "All Periods"
+  },
+  {
+   "fieldname": "second_semester_section",
+   "fieldtype": "Section Break",
+   "label": "Second Semester"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_semester",
+   "fieldtype": "Check",
+   "label": "Second Semester"
+  },
+  {
+   "fieldname": "second_periods_section",
+   "fieldtype": "Section Break",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_22",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_period_1",
+   "fieldtype": "Check",
+   "label": "Period 1"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_period_2",
+   "fieldtype": "Check",
+   "label": "Period 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_period_3",
+   "fieldtype": "Check",
+   "label": "Period 3"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_period_4",
+   "fieldtype": "Check",
+   "label": "Period 4"
+  },
+  {
+   "default": "0",
+   "fieldname": "second_all_periods",
+   "fieldtype": "Check",
+   "label": "All Periods"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-03-05 10:07:22.667108",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Degree Report Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

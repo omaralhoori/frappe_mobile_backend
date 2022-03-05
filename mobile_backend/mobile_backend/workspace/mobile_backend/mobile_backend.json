@@ -225,9 +225,18 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Degree Report Settings",
+   "link_to": "School Degree Report Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2022-02-16 13:39:42.010436",
+ "modified": "2022-03-04 06:46:45.319348",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Mobile Backend",
