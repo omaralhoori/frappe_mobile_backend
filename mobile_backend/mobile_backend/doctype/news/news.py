@@ -10,7 +10,7 @@ from mobile_backend.mobile_backend import notification, utils
 class News(Document):
 	def after_insert(self):
 		settings = frappe.get_doc("School Settings")
-		title = settings.announcement_title if settings.announcement_title else "'New News'"
+		title = settings.news_title if settings.news_title else "New News"
 		notification.send_topic_notification('news', title, self.title, {
 			"type": "News",
 			"name": self.name
