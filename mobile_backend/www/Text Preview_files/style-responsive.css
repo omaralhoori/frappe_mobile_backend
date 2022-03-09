@@ -1,0 +1,144 @@
+
+img {
+  width: auto;  /* This makes the next two lines work in IE8. */
+  max-width: 100%; /* Add !important if needed. */
+  height: auto;    /* Add !important if needed. */
+}
+	
+/*Mobile font*/
+	h1 {
+	font-size:2em;
+	}
+	h2 {
+	font-size:1.5em;
+	}
+	p {
+	font-size:1em;
+	}
+	nav a#pull {  
+    display: none;  
+	}    
+	
+	/* custom responsive area */
+	@media screen and (max-width: 1550px) { 
+	#top-header {
+		height:auto;
+	}
+	}
+	@media screen and (max-width: 1200px) { 
+		.container-force-fluid {
+			width:100%!important;
+		}
+	
+	}
+	
+	/*Styles for screen 1000px and lower*/
+    @media screen and (max-width: 1000px) {
+
+	#logo-top {
+		position:relative!important;
+		z-index:9999999999999!important;
+	}
+
+	}
+	/*Styles for screen 990px and lower*/
+	@media only screen and (max-width : 990px) {	
+
+		.sub-info {
+			position:relative!important;
+			left:0px!important;
+		}
+		.main-content {
+			border-right:none;
+		}
+		#cpanel-container {
+			position:relative!important;
+			left:0px!important;
+		}
+	}
+    /*Styles for screen 990px and lower*/
+    @media only screen and (max-width : 990px) {
+        #main-header {
+            background-image:none!important;
+        }
+    }
+	/*Styles for screen 810px and lower*/
+	@media only screen and (max-width : 800px) {
+	}
+
+	/*Styles for screen 760px and lower*/
+	@media only screen and (max-width : 760px) {	
+	.video-container { 
+		position: relative; 
+		padding-bottom: 56.25%; 
+		padding-top: 30px; 
+		height: 0; 
+		overflow: hidden; 
+	} 
+	 
+	.video-container iframe, 
+	.video-container object, 
+	.video-container embed { 
+		position: absolute; 
+		top: 0; 
+		left: 0; 
+		width: 100%; 
+		height: 100%; 
+	}
+	.hidden-xxs {
+		display:none!important;
+	}
+	.xs-text-center {
+		text-align:center!important;
+	}
+	.xs-text-left {
+		text-align:left!important;
+	}.xs-text-right {
+		text-align:right!important;
+	}
+	.hidden-xs-margin-pos {
+		margin:0px!important;
+		top:0px!important;
+		right:0px!important;
+	}
+	.modal-dialog {
+		width:auto!important;
+	}
+	
+	}
+	/*Styles for screen 550px and lower*/
+	@media only screen and (max-width : 550px) {
+	.xxs-text-center {
+		text-align:center!important;
+	}
+	.xxs-text-left {
+		text-align:left!important;
+	}
+	.xxs-text-right {
+		text-align:right!important;
+		}
+	.left-fix {
+		position:relative;
+		left:-15px;
+	}
+	.col-xxs-1,.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1,.col-xxs-2, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2,.col-xxs-3, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3,.col-xxs-4, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4,.col-xxs-5, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5,.col-xxs-6, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6,.col-xxs-7, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7,.col-xxs-8, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8,.col-xxs-9, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9,.col-xxs-10, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10,.col-xxs-11, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11,.col-xxs-12, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+	  padding-right: 0px!important;
+	  padding-left: 0px!important;
+	}
+	.congratulations {
+		 font-size:45px;
+	}
+	}
+	/*Styles for screen 450px and lower*/
+	@media only screen and (max-width : 450px) {
+	
+	}
+	}
+	/*Styles for screen 400px and lower*/
+	@media only screen and (max-width : 400px) {
+
+	}
+
+	
+
+	
