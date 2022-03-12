@@ -72,7 +72,6 @@ def get_all_contents():
 		{limit}
 	""".format(user=user, limit=LIMIT) ,as_dict=True)
 
-	print(contents)
 	return contents
 
 @frappe.whitelist(allow_guest=True)
