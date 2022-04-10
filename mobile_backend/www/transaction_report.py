@@ -12,6 +12,7 @@ def get_context(context):
     year=frappe.local.form_dict.PYEAR
     contract=frappe.local.form_dict.PCONNO
     student=frappe.local.form_dict.PSTD
+    context.no_cache = True
     parent = frappe.db.get_value("School Parent", {"branch":branch, "year": year, "contract_no": contract}, ["name"])
     if not parent:#not(branch and year and contract):
         frappe.throw(_("Not found."), frappe.DoesNotExistError)
