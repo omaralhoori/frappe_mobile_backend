@@ -83,9 +83,9 @@ def get_all_contents():
 def get_contents_version():
 	return frappe.db.sql("""
 	SELECT type, name, version FROM
-		(SELECT 'Announcement' as type, ta.name, ta.version FROM `tabAnnouncement` AS ta
+		(SELECT 'Announcement' as type, ta.name, ta.version FROM `tabAnnouncement` AS ta WHERE ta.docstatus=1
 		UNION
-		SELECT 'News' as type, tn.name, tn.version FROM `tabNews` AS tn
+		SELECT 'News' as type, tn.name, tn.version FROM `tabNews` AS tn WHERE tn.docstatus=1
 		) as all_content;
 	""", as_dict=True)
 
