@@ -11,7 +11,10 @@
   "user_id",
   "notifications_section",
   "announcement_title",
-  "news_title"
+  "news_title",
+  "column_break_8",
+  "announcement_notifiction",
+  "news_notifiction"
  ],
  "fields": [
   {
@@ -50,11 +53,27 @@
    "fieldname": "news_title",
    "fieldtype": "Data",
    "label": "New News Title"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "announcement_notifiction",
+   "fieldtype": "Check",
+   "label": "Send Announcement Notifications"
+  },
+  {
+   "default": "1",
+   "fieldname": "news_notifiction",
+   "fieldtype": "Check",
+   "label": "Send News Notifications"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2022-02-26 22:23:42.586189",
+ "modified": "2022-04-26 23:06:57.261805",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Settings",

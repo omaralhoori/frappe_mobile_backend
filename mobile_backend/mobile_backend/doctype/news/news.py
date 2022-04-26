@@ -13,12 +13,13 @@ class News(Document):
 
 	def on_submit(self):
 		settings = frappe.get_doc("School Settings")
-		title = settings.news_title if settings.news_title else "New News"
-		notification.send_topic_notification('news', title, self.title, {
-			"type": "News",
-			"name": self.name
-		})
-		
+		if settings.news_notifiction == 1:
+			title = settings.news_title if settings.news_title else "New News"
+			notification.send_topic_notification('news', title, self.title, {
+				"type": "News",
+				"name": self.name
+			})
+			
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:
