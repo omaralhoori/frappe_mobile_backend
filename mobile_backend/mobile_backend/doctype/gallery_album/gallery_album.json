@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "format:ALBUM-{####}",
  "creation": "2021-10-16 04:47:42.885181",
  "doctype": "DocType",
@@ -26,7 +27,8 @@
   "comments_section",
   "comments",
   "likes_table",
-  "views_table"
+  "views_table",
+  "amended_from"
  ],
  "fields": [
   {
@@ -151,9 +153,20 @@
    "fieldtype": "Link",
    "label": "Class",
    "options": "School Class"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Gallery Album",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
- "modified": "2021-11-05 10:49:08.948692",
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-04-26 14:48:26.183951",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Gallery Album",

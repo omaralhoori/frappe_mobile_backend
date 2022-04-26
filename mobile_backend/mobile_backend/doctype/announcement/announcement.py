@@ -9,7 +9,9 @@ from mobile_backend.mobile_backend import utils
 from mobile_backend.mobile_backend import notification
 
 class Announcement(Document):
-	def after_insert(self):
+	# def after_insert(self):
+
+	def on_submit(self):
 		data = {
 			"type": "Announcement",
 			"name": self.name
@@ -17,6 +19,7 @@ class Announcement(Document):
 		settings = frappe.get_doc("School Settings")
 		title = settings.announcement_title if settings.announcement_title else "'New announcement'"
 		notification.send_topic_notification('announcement', title, self.title,data )
+
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:
@@ -57,6 +60,7 @@ def get_all_contents():
 		WHERE f.attached_to_doctype='Announcement'
 		GROUP BY f.attached_to_name) AS ftable 
 		ON ta.name=ftable.attached_to_name
+		WHERE ta.docstatus=1
 		UNION
 		SELECT 'News' as type, tn.name, tn.title, tn.description, tn.creation, tn.likes, tn.views, tn.approved_comments,ftable.file_url,
 		IF(tv.user IS NULL,0,1) AS is_viewed,  IF(tl.user IS NULL,0,1) AS is_liked  FROM `tabNews` AS tn
@@ -67,6 +71,7 @@ def get_all_contents():
 		WHERE f.attached_to_doctype='News'
 		GROUP BY f.attached_to_name) AS ftable 
 		ON tn.name=ftable.attached_to_name
+		WHERE tn.docstatus=1
 		) as all_content
 		ORDER BY creation DESC
 		{limit}

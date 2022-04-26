@@ -8,13 +8,17 @@ from frappe.model.document import Document
 from mobile_backend.mobile_backend import notification, utils
 
 class News(Document):
-	def after_insert(self):
+	# def after_insert(self):
+	# 	print("After inserted")
+
+	def on_submit(self):
 		settings = frappe.get_doc("School Settings")
 		title = settings.news_title if settings.news_title else "New News"
 		notification.send_topic_notification('news', title, self.title, {
 			"type": "News",
 			"name": self.name
 		})
+		
 	def before_save(self):
 		approved_comments = 0
 		for comment in self.comments:
