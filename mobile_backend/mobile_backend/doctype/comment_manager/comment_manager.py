@@ -22,9 +22,20 @@ class CommentManager(Document):
 			tbl_comment.user = comment["user"]
 			tbl_comment.status = comment["status"]
 			tbl_comment.name = comment["name"]
+		return {"msg": "done"}
 	@frappe.whitelist()
 	def set_status(self, comments, new_status, document):
 		for comment in comments:
-			frappe.db.set_value("Mobile Comment", comment, {"status":new_status})
+			try:
+				frappe.db.set_value("Mobile Comment", comment, {"status":new_status})
+			except:
+				continue
 		for doc_name in frappe.db.get_list(document):
-			frappe.get_doc(document, doc_name.name).save()
+			try:
+				doc = frappe.get_doc(document, doc_name.name)
+				doc.save()
+				doc.submit()
+			except:
+				continue
+
+		return {"msg": "done"}

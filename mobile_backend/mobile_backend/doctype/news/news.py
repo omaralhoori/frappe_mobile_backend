@@ -20,7 +20,7 @@ class News(Document):
 				"name": self.name
 			})
 			
-	def before_save(self):
+	def on_update_after_submit(self):
 		approved_comments = 0
 		for comment in self.comments:
 			if comment.status == 'Approved': approved_comments += 1
@@ -65,6 +65,7 @@ def view_news():
 			rec = doc.append('views_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -85,6 +86,7 @@ def add_comment():
 		rec.user_name = user_name
 		rec.status = 'Pending'
 		doc.save(ignore_permissions=True)
+		doc.submit()
 		return rec.name
 
 @frappe.whitelist(allow_guest=True)
@@ -120,6 +122,7 @@ def like_news():
 			rec = doc.append('likes_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -130,9 +133,11 @@ def dislike_news():
 	news = frappe.form_dict.news
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
-	doc = frappe.db.sql("""
+	frappe.db.sql("""
 		DELETE FROM `tabMobile Like` WHERE parent=%s AND parenttype='News' AND user=%s
 	""", (news, user))
-	frappe.get_doc("News", news).save(ignore_permissions=True)
+	doc = frappe.get_doc("News", news)
+	doc.save(ignore_permissions=True)
+	doc.submit()
 	frappe.db.commit()
 	

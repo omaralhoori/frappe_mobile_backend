@@ -8,7 +8,7 @@ from frappe.model.document import Document
 from mobile_backend.mobile_backend import utils
 
 class GalleryAlbum(Document):
-	def before_save(self):
+	def on_update_after_submit(self):
 		approved_comments = 0
 		for comment in self.comments:
 			if comment.status == 'Approved': approved_comments += 1
@@ -62,6 +62,7 @@ def view_album():
 			rec = doc.append('views_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -117,6 +118,7 @@ def like_album():
 			rec = doc.append('likes_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -127,9 +129,11 @@ def dislike_album():
 	album = frappe.form_dict.album
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
-	doc = frappe.db.sql("""
+	frappe.db.sql("""
 		DELETE FROM `tabMobile Like` WHERE parent=%s AND parenttype='Gallery Album' AND user=%s
 	""", (album, user))
-	frappe.get_doc("Gallery Album", album).save(ignore_permissions=True)
+	doc = frappe.get_doc("Gallery Album", album)
+	doc.save(ignore_permissions=True)
+	doc.submit()
 	frappe.db.commit()
 	

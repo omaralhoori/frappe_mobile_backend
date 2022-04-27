@@ -21,7 +21,7 @@ class Announcement(Document):
 			title = settings.announcement_title if settings.announcement_title else "'New announcement'"
 			notification.send_topic_notification('announcement', title, self.title,data )
 
-	def before_save(self):
+	def on_update_after_submit(self):
 		approved_comments = 0
 		for comment in self.comments:
 			if comment.status == 'Approved': approved_comments += 1
@@ -144,6 +144,7 @@ def view_announcement():
 			rec = doc.append('views_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -164,6 +165,7 @@ def add_comment():
 		rec.user_name = user_name
 		rec.status = 'Pending'
 		doc.save(ignore_permissions=True)
+		doc.submit()
 		return rec.name
 
 @frappe.whitelist(allow_guest=True)
@@ -199,6 +201,7 @@ def like_announcement():
 			rec = doc.append('likes_table')
 			rec.user = user
 			doc.save(ignore_permissions=True)
+			doc.submit()
 			frappe.db.commit()
 		except:
 			return
@@ -209,9 +212,11 @@ def dislike_announcement():
 	announcement = frappe.form_dict.announcement
 	user = frappe.form_dict.user
 	user = utils.get_or_create_user(user)
-	doc = frappe.db.sql("""
+	frappe.db.sql("""
 		DELETE FROM `tabMobile Like` WHERE parent=%s AND parenttype='Announcement' AND user=%s
 	""", (announcement, user))
-	frappe.get_doc("Announcement", announcement).save(ignore_permissions=True)
+	doc = frappe.get_doc("Announcement", announcement)
+	doc.save(ignore_permissions=True)
+	doc.submit()
 	frappe.db.commit()
 	

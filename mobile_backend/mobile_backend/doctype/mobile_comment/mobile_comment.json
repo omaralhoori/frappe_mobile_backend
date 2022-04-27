@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "creation": "2021-10-14 15:01:42.180208",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -19,6 +20,7 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -45,7 +47,8 @@
   }
  ],
  "istable": 1,
- "modified": "2021-10-22 22:08:30.734230",
+ "links": [],
+ "modified": "2022-04-27 10:44:48.096094",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Mobile Comment",
