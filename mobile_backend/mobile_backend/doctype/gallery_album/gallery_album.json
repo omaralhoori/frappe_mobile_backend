@@ -68,6 +68,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "likes",
    "fieldtype": "Int",
@@ -79,6 +80,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "views",
    "fieldtype": "Int",
@@ -90,6 +92,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "default": "0",
    "fieldname": "approved_comments",
    "fieldtype": "Int",
@@ -102,12 +105,14 @@
    "label": "Comments"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "comments",
    "fieldtype": "Table",
    "label": "Comments",
    "options": "Mobile Comment"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "likes_table",
    "fieldtype": "Table",
    "hidden": 1,
@@ -116,6 +121,7 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "views_table",
    "fieldtype": "Table",
    "hidden": 1,
@@ -166,7 +172,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2022-04-26 14:48:26.183951",
+ "modified": "2022-04-27 10:25:50.489790",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Gallery Album",
