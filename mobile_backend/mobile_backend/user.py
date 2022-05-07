@@ -20,7 +20,7 @@ def update_user_info():
             })
             frappe.db.commit()
             return {
-                "message": "Profile updated successfully"
+                "message": "Profile updated successfullW"
             }
         else:
             return {
