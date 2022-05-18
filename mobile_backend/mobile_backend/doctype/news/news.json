@@ -26,6 +26,7 @@
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "title",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -33,6 +34,7 @@
    "reqd": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "description",
    "fieldtype": "Text Editor",
    "in_list_view": 1,
@@ -142,7 +144,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2022-04-27 10:24:06.010193",
+ "modified": "2022-05-18 22:18:15.225896",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "News",

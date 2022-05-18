@@ -12,6 +12,9 @@ class Announcement(Document):
 	# def after_insert(self):
 
 	def on_submit(self):
+		self.send_notification()
+	
+	def send_notification(self):
 		data = {
 			"type": "Announcement",
 			"name": self.name
@@ -22,6 +25,11 @@ class Announcement(Document):
 			notification.send_topic_notification('announcement', title, self.title,data )
 
 	def on_update_after_submit(self):
+		old_doc = self.get_doc_before_save()
+		if old_doc:
+			if old_doc.title != self.title or old_doc.description != self.description:
+				self.send_notification()
+
 		approved_comments = 0
 		for comment in self.comments:
 			if comment.status == 'Approved': approved_comments += 1

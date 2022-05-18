@@ -12,6 +12,9 @@ class News(Document):
 	# 	print("After inserted")
 
 	def on_submit(self):
+		self.send_notification()
+
+	def send_notification(self):
 		settings = frappe.get_doc("School Settings")
 		if settings.news_notifiction == 1:
 			title = settings.news_title if settings.news_title else "New News"
@@ -21,6 +24,11 @@ class News(Document):
 			})
 			
 	def on_update_after_submit(self):
+		old_doc = self.get_doc_before_save()
+		if old_doc:
+			if old_doc.title != self.title or old_doc.description != self.description:
+				self.send_notification()
+
 		approved_comments = 0
 		for comment in self.comments:
 			if comment.status == 'Approved': approved_comments += 1
