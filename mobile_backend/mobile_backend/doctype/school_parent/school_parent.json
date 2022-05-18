@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "format:{mobile_no}",
  "creation": "2021-10-19 08:23:52.846779",
  "doctype": "DocType",
@@ -63,11 +64,12 @@
   {
    "fieldname": "device_token",
    "fieldtype": "Small Text",
-   "hidden": 1,
-   "label": "Device Token"
+   "label": "Device Token",
+   "read_only": 1
   }
  ],
- "modified": "2021-11-02 20:48:25.829321",
+ "links": [],
+ "modified": "2022-05-08 11:41:37.549183",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Parent",
