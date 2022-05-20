@@ -79,6 +79,7 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
 				send_multiple_notification(device_token, title, message, {
 					"type": "School Group Message",
+					"student_no": student["student_no"],
 					"name": doc.name
 				})
 				frappe.db.commit()

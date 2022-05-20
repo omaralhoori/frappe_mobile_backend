@@ -59,8 +59,7 @@ def send_multiple_notification(token_str, title, message, data=None):
         return
     body = {
           'notification': {'title': title,
-                            'body': message,
-                            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+                            'body': message
                             },
           'registration_ids':
               tokens,
