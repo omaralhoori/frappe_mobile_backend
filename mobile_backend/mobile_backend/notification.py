@@ -43,7 +43,7 @@ def send_notification():
         "contract_no": contract
     }, ["device_token"])
     if tokens:
-        return send_multiple_notification(tokens, title, message)#send_token_notification(token, title, message)
+        return send_multiple_notification(tokens, title, message, {"click_action": "FLUTTER_NOTIFICATION_CLICK"})#send_token_notification(token, title, message)
     else:
         frappe.local.response['http_status_code'] = 500
         return {
@@ -59,7 +59,9 @@ def send_multiple_notification(token_str, title, message, data=None):
         return
     body = {
           'notification': {'title': title,
-                            'body': message},
+                            'body': message,
+                            "click_action": "FLUTTER_NOTIFICATION_CLICK"
+                            },
           'registration_ids':
               tokens,
           'priority': 'high',}

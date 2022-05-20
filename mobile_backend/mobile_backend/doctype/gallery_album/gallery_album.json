@@ -7,10 +7,13 @@
  "engine": "InnoDB",
  "field_order": [
   "branch",
+  "branch_name",
   "column_break_2",
   "class_code",
+  "class_name",
   "column_break_4",
   "section",
+  "section_name",
   "section_break_6",
   "title",
   "description",
@@ -170,11 +173,32 @@
    "options": "Gallery Album",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fetch_from": "branch.branch_name",
+   "fieldname": "branch_name",
+   "fieldtype": "Data",
+   "label": "Branch Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "class_code.class_name",
+   "fieldname": "class_name",
+   "fieldtype": "Data",
+   "label": "Class Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "section.section_name",
+   "fieldname": "section_name",
+   "fieldtype": "Data",
+   "label": "Section Name",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2022-05-18 22:18:50.131861",
+ "modified": "2022-05-19 10:22:36.371240",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Gallery Album",

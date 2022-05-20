@@ -131,10 +131,32 @@ def view_message():
 		for message in doc.messages:
 			if message.is_administration == 1:
 				message.is_read = 1
+		doc.seen_by_parent = "Seen"
 		doc.save(ignore_permissions=True)
 		frappe.db.commit()
 
-		
+@frappe.whitelist()
+def send_parent_message():
+	title = frappe.form_dict.title
+	message = frappe.form_dict.message
+	branch = frappe.form_dict.branch
+	doc = frappe.get_doc({
+					"doctype": "School Messaging",
+					"parent_name": frappe.session.user,
+					"title": title,
+					"branch": branch,
+					"message_type": "School Direct Message",
+					"status": 'Not seen',
+					"seen_by_parent": 'Seen',
+				})
+	row = doc.append("messages")
+	row.sender_name = frappe.db.get_value("User", frappe.session.user, "full_name")
+	row.message = message
+	row.is_administration = 0
+	row.sending_date = datetime.datetime.now()
+
+	doc.save(ignore_permissions=True)
+
 # @frappe.whitelist()
 # def get_messages2():
 # 	messages = frappe.db.sql("""

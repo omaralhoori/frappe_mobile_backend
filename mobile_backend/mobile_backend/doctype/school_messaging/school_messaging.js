@@ -70,7 +70,6 @@ let messaging_container = (wrapper, frm) => {
 	messaging_wrapper.find('button').click( () => {
 		let message = messaging_wrapper.find('textarea').val();
 		messaging_wrapper.find('textarea').val('');
-		console.log(message);
 		let row = frm.add_child("messages")
 		row.sender_name = 'Administration'
 		row.message = message;
@@ -78,6 +77,7 @@ let messaging_container = (wrapper, frm) => {
 		row.sending_date = dateutil.now_datetime();
 		//add_message(messages_wrpper, message, 'Administration', 1, 1)
 		refresh_field("messages")
+		frm.set_value("seen_by_parent", "Not seen");
 		frm.save();
 	})
 }
@@ -85,11 +85,12 @@ let messaging_container = (wrapper, frm) => {
 
 let add_message = (frm, wrapper, name, msg, sender, is_read, is_admin, sending_date) => {
 	let msg_class = is_admin ? 'admin-message' : 'user-message';
-	msg_class += is_read ? ' viewed' : ''
+	msg_class += is_read ? ' viewed' : '';
+	let date = new Date(sending_date);
 	let delete_btn = wrapper.html() != '' ? '<button class="delete-message">&times;</button>' : ''
 	let msg_wapper = $(`<div class="message-wrapper ${msg_class}">
 		<div class="sender">${sender}</div>
-		<div class="sending-date">${sending_date}</div>
+		<div class="sending-date">${date.toDateString()} ${date.toLocaleTimeString()}</div>
 		<div class="message-btn">
 		<div class="message">
 			</div>

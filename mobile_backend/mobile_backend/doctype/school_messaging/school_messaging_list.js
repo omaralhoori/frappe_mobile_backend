@@ -9,5 +9,13 @@ frappe.listview_settings['School Messaging'] = {
 		} else {
 			return [__("Not seen"), "orange", "enabled,=,0"];
 		}
+	},
+	onload: function(listview){
+		listview.page.fields_dict.message_type.get_query = function() {
+			return {
+				query: "mobile_backend.controllers.data_query.get_message_types"
+			};
+		};
+		$(".primary-action").hide()
 	}
 };
