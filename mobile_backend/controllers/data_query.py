@@ -34,6 +34,7 @@ def branch_query(doctype, txt, searchfield, start, page_len, filters):
 @frappe.whitelist()
 def class_query(doctype, txt, searchfield, start, page_len, filters):
 	conditions = []
+	page_len = 50
 	fields = get_fields("School Class", ["name", "class_name"])
 
 	return frappe.db.sql("""select {fields} from `tabSchool Class`
