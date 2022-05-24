@@ -31,6 +31,7 @@ def get_albums():
 		GROUP BY f.attached_to_name) AS ftable 
 		ON a.name=ftable.attached_to_name
 		WHERE a.docstatus=1
+		GROUP BY a.name
 	""", (user, user),as_dict=True)
 
 @frappe.whitelist(allow_guest=True)
