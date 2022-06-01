@@ -202,15 +202,6 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Settings",
-   "link_to": "School Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "Comment Manager",
    "link_to": "Comment Manager",
    "link_type": "DocType",
@@ -236,7 +227,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-03-04 06:46:45.319348",
+ "modified": "2022-05-31 20:34:27.643651",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Mobile Backend",
