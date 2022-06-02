@@ -1,3 +1,4 @@
+from requests import session
 import frappe
 from frappe import auth
 
@@ -46,4 +47,4 @@ def generate_keys(user):
 
 @frappe.whitelist()
 def get_user_name():
-    return "omar"
+    return frappe.session.user
