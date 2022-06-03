@@ -321,7 +321,7 @@ def add_students(students):
 							"{student_gender}", "{class_code}", "{section}")
 						ON DUPLICATE key UPDATE `year`="{year}", `branch`="{branch}", 
 						`contract_no`="{contract}", `parent_no`="{mobile}", `student_no`="{student_no}",
-						`student_name`="{student_name}", `student_gender`="{student_gender}", `class`="class_code", `section`="{section}"
+						`student_name`="{student_name}", `student_gender`="{student_gender}", `class`="{class_code}", `section`="{section}"
 						""".format(year=year_code, branch=branch_code, contract=contract_no, name=name, mobile=mobile_no,
 							student_no=student_no,student_name=student_name,student_gender=student_gender,
 							class_code=class_code,section=section
