@@ -43,6 +43,7 @@
   {
    "fieldname": "parent_no",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Parent",
    "options": "School Parent"
   },
@@ -56,6 +57,8 @@
   {
    "fieldname": "student_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Student Name"
   },
   {
@@ -88,7 +91,7 @@
   }
  ],
  "links": [],
- "modified": "2022-03-04 06:48:41.949693",
+ "modified": "2022-06-02 11:15:13.928960",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Student",
