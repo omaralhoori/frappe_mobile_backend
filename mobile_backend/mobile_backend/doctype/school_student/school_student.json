@@ -62,7 +62,7 @@
    "fieldname": "student_gender",
    "fieldtype": "Select",
    "label": "Student Gender",
-   "options": "Male\nFemale"
+   "options": "\nMale\nFemale"
   },
   {
    "fieldname": "class",
@@ -88,7 +88,7 @@
   }
  ],
  "links": [],
- "modified": "2022-03-04 06:48:41.949693",
+ "modified": "2022-05-31 20:39:05.083410",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Student",

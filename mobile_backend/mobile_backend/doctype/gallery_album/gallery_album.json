@@ -17,6 +17,7 @@
   "section_break_6",
   "title",
   "description",
+  "restricted",
   "section_break_3",
   "likes",
   "column_break_5",
@@ -194,11 +195,18 @@
    "fieldtype": "Data",
    "label": "Section Name",
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "restricted",
+   "fieldtype": "Check",
+   "label": "Restricted"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2022-05-19 10:22:36.371240",
+ "modified": "2022-05-25 10:17:22.005021",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Gallery Album",
