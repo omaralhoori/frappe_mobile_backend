@@ -85,6 +85,34 @@ def section_query(doctype, txt, searchfield, start, page_len, filters):
 		})
 
 @frappe.whitelist()
+def parent_query(doctype, txt, searchfield, start, page_len, filters):
+	conditions = []
+	fields = get_fields("School Parent", ["name", "parent_name"])
+
+	return frappe.db.sql("""select {fields} from `tabSchool Parent`
+		WHERE ({key} like %(txt)s
+				or parent_name like %(txt)s
+				or contract_no like %(txt)s
+				)
+			{fcond} {mcond}
+		order by
+			if(locate(%(_txt)s, name), locate(%(_txt)s, name), 99999),
+			if(locate(%(_txt)s, parent_name), locate(%(_txt)s, parent_name), 99999),
+			idx desc,
+			name, parent_name
+		limit %(start)s, %(page_len)s""".format(**{
+			'fields': ", ".join(fields),
+			'key': searchfield,
+			'fcond': get_filters_cond(doctype, filters, conditions),
+			'mcond': get_match_cond(doctype)
+		}), {
+			'txt': "%%%s%%" % txt,
+			'_txt': txt.replace("%", ""),
+			'start': start,
+			'page_len': page_len
+		})
+
+@frappe.whitelist()
 def get_message_types(doctype, txt, searchfield, start, page_len, filters):
 	return [("School Direct Message", "School Direct Message"),( "School Group Message",  "School Group Message")]
 
