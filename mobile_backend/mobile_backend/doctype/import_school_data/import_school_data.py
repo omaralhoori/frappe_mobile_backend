@@ -224,6 +224,14 @@ class ImportSchoolData(Document):
 		students = tree.findall('Student')
 		add_students(students)
 
+	@frappe.whitelist()
+	def update_parent_password(self, branch, year):
+		parents = frappe.get_all("School Parent",fields=["mobile_no", "contract_no"] ,filters={"branch": branch, "year": year})
+		for parent in parents:
+			update_password(user=parent["mobile_no"], pwd=parent["contract_no"])
+		frappe.msgprint("Password updated sucessfully")
+		frappe.db.commit()
+
 def add_user(user, fullname):
 	try:
 		frappe.db.sql("""
@@ -282,6 +290,7 @@ def add_parents(parents, password):
 		except:
 			pass
 	frappe.db.commit()
+	
 
 def update_parent(year, branch, contract, name, mobile):
 	frappe.db.sql("""
@@ -321,7 +330,7 @@ def add_students(students):
 							"{student_gender}", "{class_code}", "{section}")
 						ON DUPLICATE key UPDATE `year`="{year}", `branch`="{branch}", 
 						`contract_no`="{contract}", `parent_no`="{mobile}", `student_no`="{student_no}",
-						`student_name`="{student_name}", `student_gender`="{student_gender}", `class`="class_code", `section`="{section}"
+						`student_name`="{student_name}", `student_gender`="{student_gender}", `class`="{class_code}", `section`="{section}"
 						""".format(year=year_code, branch=branch_code, contract=contract_no, name=name, mobile=mobile_no,
 							student_no=student_no,student_name=student_name,student_gender=student_gender,
 							class_code=class_code,section=section
