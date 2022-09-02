@@ -13,7 +13,9 @@
   "student_name",
   "student_gender",
   "class",
+  "class_name",
   "section",
+  "section_name",
   "degree_report"
  ],
  "fields": [
@@ -88,10 +90,24 @@
    "fieldname": "degree_report",
    "fieldtype": "Check",
    "label": "Degree Report"
+  },
+  {
+   "fetch_from": "class.class_name",
+   "fieldname": "class_name",
+   "fieldtype": "Data",
+   "label": "Class Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "section.section_name",
+   "fieldname": "section_name",
+   "fieldtype": "Data",
+   "label": "Section Name",
+   "read_only": 1
   }
  ],
  "links": [],
- "modified": "2022-06-02 11:15:13.928960",
+ "modified": "2022-06-11 15:36:56.968225",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Student",

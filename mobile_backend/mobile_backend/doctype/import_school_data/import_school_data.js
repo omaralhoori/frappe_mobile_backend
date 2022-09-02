@@ -89,4 +89,19 @@ frappe.ui.form.on('Import School Data', {
 			}
 		})
 	},
+	change_password_button: function(frm){
+		frappe.show_progress("Processing...", 1, 2)
+		frappe.call({
+			doc:frm.doc,
+			method: "update_parent_password",
+			args: {
+				branch: frm.doc.parent_branch,
+				year: frm.doc.parent_year,
+			},
+			callback: (res) => {
+				frappe.show_progress("Processing...", 2, 2)
+				frappe.hide_progress();
+			}
+		})
+	},
 });
