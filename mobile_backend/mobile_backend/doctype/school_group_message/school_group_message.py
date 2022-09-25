@@ -10,9 +10,10 @@ from mobile_backend.mobile_backend.notification import send_multiple_notificatio
 from mobile_backend.mobile_backend.utils import get_current_site_name
 from frappe.utils.dateutils import datetime
 from frappe.desk.form.load import get_attachments
+from mobile_backend.mobile_backend.doctype.school_messaging.school_messaging import add_attachment_file
 
 class SchoolGroupMessage(Document):
-	def on_update(self):
+	def on_submit(self):
 		attachments = get_attachments(self.doctype, self.name)
 		attachments_list = [attach.file_url for attach in attachments]
 		kwargs = {
@@ -76,6 +77,7 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				row.is_administration = 1
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
+				add_attachment_file("School Group Message", name, doc.name, "School Messaging")
 				device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
 				send_multiple_notification(device_token, title, message, {
 					"type": "School Group Message",
@@ -92,6 +94,7 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 				doc.title = title
 				doc.thumbnail = thumbnail
 				doc.attachments = attachments
+				add_attachment_file("School Group Message", name, doc.name, "School Messaging")
 				for _message in doc.messages:
 					if _message.is_administration == 1:
 						_message.message = message

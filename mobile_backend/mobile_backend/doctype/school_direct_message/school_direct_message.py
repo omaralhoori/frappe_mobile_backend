@@ -10,9 +10,10 @@ from mobile_backend.mobile_backend.utils import get_current_site_name
 from mobile_backend.mobile_backend.notification import send_multiple_notification
 from frappe.utils.dateutils import datetime
 from frappe.desk.form.load import get_attachments
+from mobile_backend.mobile_backend.doctype.school_messaging.school_messaging import update_attachment_file, add_attachment_file
 
 class SchoolDirectMessage(Document):
-	def on_update(self):
+	def on_submit(self):
 		attachments = get_attachments(self.doctype, self.name)
 		attachments_list = [attach.file_url for attach in attachments]
 		add_direct_message(self.title, self.message, self.branch, self.year, self.contract, self.name, 
@@ -67,6 +68,7 @@ def add_direct_message(title, message, branch, year, contract , name, site, atta
 				row.is_administration = 1
 				row.sending_date = datetime.datetime.now()
 				doc.insert()
+				update_attachment_file("School Direct Message", name, doc.name, "School Messaging")
 				#print(device_token)
 				send_multiple_notification(device_token, title, message, {
 					"type": "School Direct Message",
@@ -82,6 +84,7 @@ def add_direct_message(title, message, branch, year, contract , name, site, atta
 						_message.message = message
 						break
 				doc.save()
+				update_attachment_file("School Direct Message", name, doc.name, "School Messaging")
 	frappe.db.commit()
 
 def add_replay(message_name, message):

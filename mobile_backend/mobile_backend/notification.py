@@ -2,8 +2,13 @@ from __future__ import unicode_literals
 import frappe
 import requests
 import json
+import firebase_admin
+from firebase_admin import credentials, messaging
 
 TOKEN_SEP = '/;/'
+firebase_cred = credentials.Certificate(f"{frappe.local.site}/firebase.json")
+firebase_app = firebase_admin.initialize_app(firebase_cred)
+
 @frappe.whitelist()
 def update_device_token():
     user = frappe.session.user
@@ -57,41 +62,51 @@ def send_multiple_notification(token_str, title, message, data=None):
     tokens = token_str.split(TOKEN_SEP)
     if not tokens or len(tokens) == 0:
         return
-    body = {
-          'notification': {'title': title,
-                            'body': message
-                            },
-          'registration_ids':
-              tokens,
-          'priority': 'high',}
-    if data:
-        body["data"] = data
-    return send_http_notification(body)
+    
+    return send_token_notification(tokens, title, message, data)
 
 def send_token_notification(token, title, message, data=None):
     if not token:
         return
-    body = {
-          'notification': {'title': title,
-                            'body': message},
-          'to':
-              token,
-          'priority': 'high',}
-    if data:
-        body["data"] = data
-    return send_http_notification(body)
+    #frappe.msgprint(isinstance(token, list))
+    if (isinstance(token, list) and len(token) == 1) or isinstance(token, str) :
+        if not isinstance(token, str):
+            token = token[0]
+        message = messaging.Message(
+        notification=messaging.Notification(
+        title=title,
+        body=message
+        ),
+        data= data,
+        token=token
+        )
+        response = messaging.send(message)
+    else:
+        message = messaging.MulticastMessage(
+            notification=messaging.Notification(
+                title=title,
+                body=message,
+            ),
+            data=data,
+            tokens=token
+        )
+        response = messaging.send_multicast(message)
+    return response
 
 
 def send_topic_notification(topic, title, message, data=None):
-    body = {
-          'notification': {'title': title,
-                            'body': message},
-          'to': '/topics/' + topic,
-          'priority': 'high',}
-    if data:
-        body["data"] = data
-    return send_http_notification(body)
+    message = messaging.Message(
+    notification=messaging.Notification(
+    title=title,
+    body=message
+    ),
+    data= data,
+    topic=topic
+    )
+    return messaging.send(message)
 
+
+# old way
 def send_http_notification(body):
     if not frappe.local.conf.fcm_server_key:
         return "Firebase Cloud Messaging API Key is not set"

@@ -18,7 +18,8 @@
   "column_break_8",
   "thumbnail",
   "section_break_10",
-  "message"
+  "message",
+  "amended_from"
  ],
  "fields": [
   {
@@ -99,10 +100,20 @@
    "fieldtype": "Data",
    "label": "Branch Name",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "School Group Message",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2022-05-19 10:20:14.270672",
+ "modified": "2022-09-22 11:52:54.020493",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Group Message",

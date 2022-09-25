@@ -18,7 +18,8 @@
   "column_break_8",
   "thumbnail",
   "section_break_10",
-  "message"
+  "message",
+  "amended_from"
  ],
  "fields": [
   {
@@ -102,10 +103,20 @@
    "fieldtype": "Data",
    "label": "Parent Name",
    "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "School Direct Message",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
+ "is_submittable": 1,
  "links": [],
- "modified": "2022-06-03 18:05:06.944913",
+ "modified": "2022-09-22 10:52:52.891643",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Direct Message",

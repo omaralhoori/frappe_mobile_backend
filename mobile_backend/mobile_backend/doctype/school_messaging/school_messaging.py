@@ -29,9 +29,12 @@ class SchoolMessaging(Document):
 @frappe.whitelist()
 def get_messages():
 	messages = frappe.db.sql("""
-		SELECT name, title, creation, message_type, message_name, student_no, student_name, thumbnail, attachments
-		FROM `tabSchool Messaging`
+		SELECT tsm.name, tsm.title, tsm.creation, tsm.message_type, tsm.message_name, tsm.student_no, tsm.student_name, tsm.thumbnail, 
+		GROUP_CONCAT(tf.file_url SEPARATOR  ";") as attachments
+		FROM `tabSchool Messaging` as tsm
+		LEFT JOIN `tabFile` AS tf on tsm.name=tf.attached_to_name AND attached_to_doctype='School Messaging'
 		WHERE parent_name=%s
+		GROUP BY tsm.name
 		ORDER BY creation DESC
 	""", frappe.session.user, as_dict=True)
 	for message in messages:
@@ -156,6 +159,20 @@ def send_parent_message():
 	row.sending_date = datetime.datetime.now()
 
 	doc.save(ignore_permissions=True)
+
+def update_attachment_file(old_dt, old_dn, new_dn, new_dt):
+	frappe.db.sql(f"""
+		UPDATE `tabFile` SET attached_to_name="{new_dn}" , attached_to_doctype="{new_dt}"
+		WHERE attached_to_name="{old_dn}" AND attached_to_doctype="{old_dt}"
+	""")
+def add_attachment_file(old_dt, old_dn, new_dn, new_dt):
+	frappe.db.sql(f"""
+		INSERT INTO tabFile( name,creation, modified, modified_by, owner, file_name, file_url, 
+		attached_to_name, file_size, attached_to_doctype, is_private,
+		is_home_folder, folder, attached_to_field, content_hash ) select CONCAT(name,"-{new_dn}"),creation, modified, modified_by, owner, file_name, file_url, 
+		"{new_dn}", file_size, "{new_dt}", is_private,
+		is_home_folder, folder, attached_to_field, content_hash from tabFile where attached_to_name="{old_dn}" AND attached_to_doctype="{old_dt}";
+	""")
 
 # @frappe.whitelist()
 # def get_messages2():
