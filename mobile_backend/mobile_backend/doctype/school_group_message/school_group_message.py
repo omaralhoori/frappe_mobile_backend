@@ -11,6 +11,7 @@ from mobile_backend.mobile_backend.utils import get_current_site_name
 from frappe.utils.dateutils import datetime
 from frappe.desk.form.load import get_attachments
 from mobile_backend.mobile_backend.doctype.school_messaging.school_messaging import add_attachment_file
+import sys
 
 class SchoolGroupMessage(Document):
 	def on_submit(self):
@@ -21,6 +22,7 @@ class SchoolGroupMessage(Document):
 			"class_code":self.class_code, "section_code":self.section, "site": get_current_site_name(),
 			"attachments": ";".join(attachments_list), "thumbnail": self.thumbnail
 		}
+		#add_group_message(**kwargs)
 		thread = threading.Thread(target=add_group_message, kwargs=kwargs)
 		thread.start()
 
@@ -53,52 +55,58 @@ def add_group_message(title, message, branch, name, site, class_code=None, secti
 	students = frappe.db.get_list('School Student', filters=filters,fields=["name", "parent_no", "student_name", "student_no"])
 	for student in students:
 		if student["parent_no"]:
-			message_name = frappe.db.get_value("School Messaging", {
-				"message_type": "School Group Message",
-				"parent_name": student["parent_no"],
-				"message_name": name
-			}, "name")
-			if not message_name:
-				doc = frappe.get_doc({
-					"doctype": "School Messaging",
-					"parent_name": student["parent_no"],
-					"student_no": student["student_no"],
-					"student_name": student["student_name"],
-					"title": title,
-					"branch": branch,
-					"message_name": name,
+			try:
+				message_name = frappe.db.get_value("School Messaging", {
 					"message_type": "School Group Message",
-					"attachments": attachments,
-					"thumbnail": thumbnail
-				})
-				row = doc.append("messages")
-				row.sender_name = "Administration"
-				row.message = message
-				row.is_administration = 1
-				row.sending_date = datetime.datetime.now()
-				doc.insert()
-				add_attachment_file("School Group Message", name, doc.name, "School Messaging")
-				device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
-				send_multiple_notification(device_token, title, message, {
-					"type": "School Group Message",
-					"student_no": student["student_no"],
-					"name": doc.name
-				})
-				frappe.db.commit()
-			else:
-				# frappe.db.set_value("School Messaging", message_name, {
-				# 	"title": title,
-				# 	"message": message,
-				# })
-				doc = frappe.get_doc("School Messaging", message_name)
-				doc.title = title
-				doc.thumbnail = thumbnail
-				doc.attachments = attachments
-				add_attachment_file("School Group Message", name, doc.name, "School Messaging")
-				for _message in doc.messages:
-					if _message.is_administration == 1:
-						_message.message = message
-						break
-				doc.save()
+					"parent_name": student["parent_no"],
+					"message_name": name
+				}, "name")
+				if not message_name:
+					doc = frappe.get_doc({
+						"doctype": "School Messaging",
+						"parent_name": student["parent_no"],
+						"student_no": student["student_no"],
+						"student_name": student["student_name"],
+						"title": title,
+						"branch": branch,
+						"message_name": name,
+						"message_type": "School Group Message",
+						"attachments": attachments,
+						"thumbnail": thumbnail
+					})
+					row = doc.append("messages")
+					row.sender_name = "Administration"
+					row.message = message
+					row.is_administration = 1
+					row.sending_date = datetime.datetime.now()
+					doc.insert()
+					add_attachment_file("School Group Message", name, doc.name, "School Messaging")
+					device_token = frappe.db.get_value("School Parent", student["parent_no"], ["device_token"])
+					try:
+						send_multiple_notification(device_token, title, message, {
+							"type": "School Group Message",
+							"student_no": student["student_no"],
+							"name": doc.name
+						})
+					except BaseException as e:
+						print(f"Unexpected {e=}, {type(e)=}, {student['parent_no']}")
+					frappe.db.commit()
+				else:
+					# frappe.db.set_value("School Messaging", message_name, {
+					# 	"title": title,
+					# 	"message": message,
+					# })
+					doc = frappe.get_doc("School Messaging", message_name)
+					doc.title = title
+					doc.thumbnail = thumbnail
+					doc.attachments = attachments
+					add_attachment_file("School Group Message", name, doc.name, "School Messaging")
+					for _message in doc.messages:
+						if _message.is_administration == 1:
+							_message.message = message
+							break
+					doc.save()
+			except BaseException as err:
+				print(f"Unexpected {err=}, {type(err)=}, {student['parent_no']}")
 	frappe.db.commit()
 
