@@ -21,8 +21,8 @@ def get_report():
     student_no = frappe.form_dict.student_no
 
     url = f"{settings.data_url}/reports/rwservlet?report={report}&userid={settings.user_id}&PERCENFLG=1&STDTRNFLG=1&CONCATMATFLG=2&CONCATMATFLG_DTL=0&SUMPERDIPFLG=2&STDFLG=2&PYEAR={year}&PALLPER={all_periods}&PCLASS={class_no}&PDIV={division_no}&PBRN={branch_no}&PPER={period}&PSEM={semester}&STDBRN={branch_no}&STDCON={contract_no}&STDNO={student_no}"
-    print(url)
-    res = requests.get(URL)
+    #print(url)
+    res = requests.get(url)
     frappe.local.response.filename = "Degree Report"
     frappe.local.response.filecontent = res.content #get_pdf(html)
     frappe.local.response.type = "pdf"
