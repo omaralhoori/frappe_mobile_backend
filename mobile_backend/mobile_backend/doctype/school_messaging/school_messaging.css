@@ -45,6 +45,7 @@
 
 .messaging-wrapper .admin-message .message{
 	margin-left: 10px;
+	white-space: pre-line;
 } 
 
 .messaging-wrapper .user-message .message{

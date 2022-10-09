@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-08 20:35:27.524955",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "student_name",
+  "class_name",
+  "section_name",
+  "message",
+  "contract_no",
+  "branch_code",
+  "student_no",
+  "class_code",
+  "section_code"
+ ],
+ "fields": [
+  {
+   "fieldname": "student_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Student Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "class_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Class Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Section Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "message",
+   "fieldtype": "Text",
+   "label": "Message",
+   "read_only": 1
+  },
+  {
+   "fieldname": "contract_no",
+   "fieldtype": "Data",
+   "label": "Contract No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "label": "Branch Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "student_no",
+   "fieldtype": "Data",
+   "label": "Student No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "class_code",
+   "fieldtype": "Data",
+   "label": "Class Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_code",
+   "fieldtype": "Data",
+   "label": "Section Code",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-10-08 20:36:06.719182",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Absent Message Template",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

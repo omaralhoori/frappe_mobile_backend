@@ -3,9 +3,14 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
+from email import message
+from mobile_backend.mobile_backend.notification import send_multiple_notification
+
+from mobile_backend.mobile_backend.utils import get_current_site_name
 import frappe
 from frappe.model.document import Document
 from frappe.utils.dateutils import datetime
+import threading
 class SchoolMessaging(Document):
 	def get_messages(self):
 		# messages = []
@@ -191,3 +196,95 @@ def add_attachment_file(old_dt, old_dn, new_dn, new_dt):
 # 	""", frappe.session.user, as_dict=True)
 # 	return messages
 
+def add_messages(messages, message_type, message_title):
+	kwargs = {
+			"messages":messages,"message_type":message_type, "message_title":message_title, 
+		}
+	print(messages)
+	print(len(messages))
+	if len(messages) > 25:
+		kwargs["site_name"] = get_current_site_name()
+		thread = threading.Thread(target=send_messages_async, kwargs=kwargs)
+		thread.start()
+		return 2
+	else:
+		send_messages_async(**kwargs)
+		return 1
+
+def send_messages_async(messages, message_type, message_title, site_name=None):
+	if site_name:
+		frappe.init(site=site_name)
+		frappe.connect()
+	for message in messages:
+		create_message(message_type, message_title, message)
+
+	frappe.db.commit()
+
+def create_message(message_type, message_title, message):
+	if message_type == "School Group Message":
+		branch_no, contract_no, student_no, msg = message.get("branch_code"), message.get("contract_no"), message.get("student_no"), message.get("message")
+		print(branch_no, contract_no, student_no, msg)
+		if not branch_no or not contract_no or not student_no or not msg: return
+		add_student_message(branch_no, contract_no, student_no, message_title, msg)
+	else:
+		branch_no, contract_no, msg = message.get("branch_code"), message.get("contract_no"), message.get("message")
+		if not branch_no or not contract_no or not msg: return
+		add_parent_message(branch_no, contract_no, message_title, msg)
+
+def add_student_message(branch_no, contract_no, student_no, message_title, msg):
+	parent = frappe.db.get_value("School Parent", {"contract_no": contract_no, "branch": branch_no}, ["name","parent_name", "device_token"])
+	if not parent: return
+	parent_id, parent_name, device_token = parent
+	student = frappe.db.get_value("School Student", {"parent_no": parent_id, "branch": branch_no, "contract_no": contract_no, "student_no": student_no}, ["student_name"])
+	if not student: return
+	student_name = student
+	doc = frappe.get_doc({
+		"doctype": "School Messaging",
+		"parent_name": parent_id,
+		"student_no": student_no,
+		"student_name": student_name,
+		"title": message_title,
+		"branch": branch_no,
+		"message_type": "School Group Message",
+	})
+	row = doc.append("messages")
+	row.sender_name = "Administration"
+	row.message = msg
+	row.is_administration = 1
+	row.sending_date = datetime.datetime.now()
+	doc.insert()
+	try:
+		send_multiple_notification(device_token, message_title, msg, {
+			"type": "School Group Message",
+			"student_no": student_no,
+			"name": doc.name
+		})
+	except BaseException as e:
+		print(f"Unexpected {e=}, {type(e)=}")
+
+
+def add_parent_message(branch_no, contract_no, message_title, msg):
+	parent = frappe.db.get_value("School Parent", {"contract_no": contract_no, "branch": branch_no}, ["name","parent_name","device_token"])
+	if not parent: return
+	parent_id, parent_name, device_token = parent
+	doc = frappe.get_doc({
+		"doctype": "School Messaging",
+		"parent_name": parent_id,
+		"title": message_title,
+		"branch": branch_no,
+		"message_type": "School Direct Message",
+	})
+	row = doc.append("messages")
+	row.sender_name = "Administration"
+	row.message = msg
+	row.is_administration = 1
+	row.sending_date = datetime.datetime.now()
+	doc.insert()
+	try:
+		send_multiple_notification(device_token, message_title, msg, {
+			"type": "School Direct Message",
+			"name": doc.name
+		})
+	except BaseException as e:
+		print(f"Unexpected")
+	

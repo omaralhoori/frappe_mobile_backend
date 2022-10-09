@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-09 11:19:13.504376",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "branch_code",
+  "contract_no",
+  "student_no",
+  "message"
+ ],
+ "fields": [
+  {
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "label": "Branch Code",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "contract_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contract No",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "student_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Student No",
+   "read_only": 1
+  },
+  {
+   "columns": 7,
+   "fieldname": "message",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Message",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-10-09 12:44:07.187387",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Followup Message Template",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

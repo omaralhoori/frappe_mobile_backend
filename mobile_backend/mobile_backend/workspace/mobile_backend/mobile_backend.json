@@ -185,6 +185,33 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Absent Messages",
+   "link_to": "School Absent Messages",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Follow-up Messages",
+   "link_to": "School Followup Messages",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Claim Messages",
+   "link_to": "School Claim Messages",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Contact Messages",
    "link_to": "Contact Messages",
    "link_type": "DocType",
@@ -227,7 +254,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-05-31 20:34:27.643651",
+ "modified": "2022-10-09 14:36:11.652460",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Mobile Backend",

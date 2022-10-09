@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "allow_rename": 1,
+ "creation": "2022-10-09 11:13:36.989901",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "voucher_no",
+  "column_break_2",
+  "from_date",
+  "column_break_4",
+  "to_date",
+  "section_break_6",
+  "get_messages",
+  "column_break_8",
+  "send_messages",
+  "column_break_10",
+  "status",
+  "section_break_12",
+  "messages"
+ ],
+ "fields": [
+  {
+   "fieldname": "voucher_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Voucher No"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "From Date"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date"
+  },
+  {
+   "fieldname": "section_break_6",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_messages",
+   "fieldtype": "Button",
+   "label": "Get Messages"
+  },
+  {
+   "fieldname": "column_break_8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "send_messages",
+   "fieldtype": "Button",
+   "label": "Send Messages"
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Not Sent\nSent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "messages",
+   "fieldtype": "Table",
+   "label": "Messages",
+   "options": "School Followup Message Template"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-10-09 11:21:26.441523",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Followup Messages",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "voucher_no"
+}

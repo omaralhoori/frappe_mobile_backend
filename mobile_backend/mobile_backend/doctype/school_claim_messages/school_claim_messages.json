@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "allow_copy": 1,
+ "allow_rename": 1,
+ "creation": "2022-10-09 13:34:26.183164",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "column_break_2",
+  "serial",
+  "section_break_4",
+  "get_messages",
+  "column_break_6",
+  "send_messages",
+  "section_break_8",
+  "claim_messages"
+ ],
+ "fields": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "serial",
+   "fieldtype": "Data",
+   "label": "Serial"
+  },
+  {
+   "fieldname": "section_break_4",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_messages",
+   "fieldtype": "Button",
+   "label": "Get Messages"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "send_messages",
+   "fieldtype": "Button",
+   "label": "Send Messages"
+  },
+  {
+   "fieldname": "section_break_8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "claim_messages",
+   "fieldtype": "Table",
+   "label": "Claim Messages",
+   "options": "School Claim Message Template"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-10-09 13:34:33.567634",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Claim Messages",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

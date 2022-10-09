@@ -1,0 +1,48 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-10-09 13:32:12.622413",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "branch_code",
+  "contract_no",
+  "message"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "contract_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contract No",
+   "read_only": 1
+  },
+  {
+   "columns": 8,
+   "fieldname": "message",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Message",
+   "read_only": 1
+  },
+  {
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "label": "Branch No",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-10-09 14:28:38.502241",
+ "modified_by": "Administrator",
+ "module": "Mobile Backend",
+ "name": "School Claim Message Template",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
