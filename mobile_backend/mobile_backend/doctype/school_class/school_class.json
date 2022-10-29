@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "format:{class_code}",
  "creation": "2021-10-19 06:19:44.957652",
  "doctype": "DocType",
@@ -6,7 +7,12 @@
  "engine": "InnoDB",
  "field_order": [
   "class_code",
-  "class_name"
+  "class_name",
+  "results_options_section",
+  "hide_percentage",
+  "merge_subjects",
+  "merge_subjects_with_details",
+  "hide_total"
  ],
  "fields": [
   {
@@ -23,9 +29,39 @@
    "in_standard_filter": 1,
    "label": "Class Name",
    "reqd": 1
+  },
+  {
+   "fieldname": "results_options_section",
+   "fieldtype": "Section Break",
+   "label": "Results Options"
+  },
+  {
+   "default": "1",
+   "fieldname": "hide_percentage",
+   "fieldtype": "Check",
+   "label": "Hide Percentage"
+  },
+  {
+   "default": "0",
+   "fieldname": "merge_subjects",
+   "fieldtype": "Check",
+   "label": "Merge Subjects"
+  },
+  {
+   "default": "0",
+   "fieldname": "merge_subjects_with_details",
+   "fieldtype": "Check",
+   "label": "Merge Subjects With Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_total",
+   "fieldtype": "Check",
+   "label": "Hide Total"
   }
  ],
- "modified": "2021-10-19 06:19:44.957652",
+ "links": [],
+ "modified": "2022-10-29 19:10:05.588556",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "School Class",
