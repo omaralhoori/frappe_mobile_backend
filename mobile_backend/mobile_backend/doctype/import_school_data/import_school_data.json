@@ -21,6 +21,8 @@
   "parent_branch",
   "parent_year",
   "column_break_19",
+  "update_exists",
+  "set_password",
   "default_password",
   "import_parent_data",
   "change_password_button",
@@ -149,11 +151,23 @@
    "fieldname": "change_password_button",
    "fieldtype": "Button",
    "label": "Change Password"
+  },
+  {
+   "default": "0",
+   "fieldname": "update_exists",
+   "fieldtype": "Check",
+   "label": "On Duplicate Update"
+  },
+  {
+   "default": "1",
+   "fieldname": "set_password",
+   "fieldtype": "Check",
+   "label": "Set Password"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2022-06-11 20:12:37.848627",
+ "modified": "2022-11-14 04:52:20.335700",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Import School Data",

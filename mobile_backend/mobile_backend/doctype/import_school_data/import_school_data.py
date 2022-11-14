@@ -178,29 +178,31 @@ class ImportSchoolData(Document):
 				pass
 		return {}
 	@frappe.whitelist()
-	def import_parent_data(self, branch, year, password):
-		rel_link = '/reports/rwservlet?report=STRMOBCON'
-		data_settings = frappe.get_doc("School Settings")
-		url=None
-		if data_settings.data_url and data_settings.data_url != '':
-			if data_settings.user_id and data_settings.user_id != '':
-				kwargs = {
-					"data_url": data_settings.data_url,
-					"rel_link":rel_link,
-					"user_id": data_settings.user_id,
-					"branch": branch,
-					"year": year
-				}
-				url = '{data_url}{rel_link}&userid={user_id}&PBRN={branch}&PYEAR={year}'.format(**kwargs)
-		if not url:
-			frappe.throw(_("Data url is not correct"))
-			return
+	def import_parent_data(self, branch, year, password, update_exists=False, set_password=False):
+		# rel_link = '/reports/rwservlet?report=STRMOBCON'
+		# data_settings = frappe.get_doc("School Settings")
+		# url=None
+		# if data_settings.data_url and data_settings.data_url != '':
+		# 	if data_settings.user_id and data_settings.user_id != '':
+		# 		kwargs = {
+		# 			"data_url": data_settings.data_url,
+		# 			"rel_link":rel_link,
+		# 			"user_id": data_settings.user_id,
+		# 			"branch": branch,
+		# 			"year": year
+		# 		}
+		# 		url = '{data_url}{rel_link}&userid={user_id}&PBRN={branch}&PYEAR={year}'.format(**kwargs)
+		# if not url:
+		# 	frappe.throw(_("Data url is not correct"))
+		# 	return
 
-		res = requests.get(url)
-		tree = ElementTree.fromstring(res.content)
+		# res = requests.get(url)
+		# tree = ElementTree.fromstring(res.content)
+		res = open("/mnt/d/work/almanar/db/result.xml", 'r')
+		tree = ElementTree.fromstring(res.read())
 		parents = tree.findall('Parent')
 		#self.enqueue_add_parents(parents, password)
-		add_parents(parents, password)
+		add_parents(parents, password, update_exists, set_password)
 	@frappe.whitelist()
 	def import_student_data(self, branch, year):
 		rel_link = '/reports/rwservlet?report=STRMOBSTD'
@@ -232,37 +234,48 @@ class ImportSchoolData(Document):
 		frappe.msgprint("Password updated sucessfully")
 		frappe.db.commit()
 
-def add_user(user, fullname):
+def add_user(user, fullname, update_exists=False):
 	try:
-		frappe.db.sql("""
+		query = """
 		INSERT INTO 
 		`tabUser`(name, creation, modified, modified_by, owner, 
 		username, full_name, first_name,email, user_type) 
 		VALUES("{user}", now(), now(), 'Administrator', 'Administrator',
 				"{user}", "{name}", "{name}", "{user}", "Website User")
-		ON DUPLICATE key UPDATE `full_name`="{name}"
-		""".format(user= user, name= fullname))
+		"""
+		if update_exists:
+			query += """ ON DUPLICATE key UPDATE `full_name`="{name}" """
+			print("update-----------------------------------------------")
+
+		query = query.format(user= user, name= fullname)
+
+		frappe.db.sql(query)
 		frappe.db.commit()
 		return True
 	except:
 		return False
 
-def add_parent(year, branch, contract, name, mobile):
+def add_parent(year, branch, contract, name, mobile, update_exists=False):
 	try:
-		frappe.db.sql("""
+		query = """
 						INSERT INTO `tabSchool Parent`(name, creation, modified, modified_by, owner, 
 							year, branch, contract_no, parent_name, mobile_no)
 						VALUES("{mobile}", now(), now(),  'Administrator', 'Administrator',
 						"{year}", "{branch}", "{contract}", "{name}", "{mobile}")
-						ON DUPLICATE key UPDATE `year`="{year}", `branch`="{branch}", 
-						`contract_no`="{contract}", `parent_name`="{name}", `mobile_no`="{mobile}"
-						""".format(year=year, branch=branch, contract=contract, name=name, mobile=mobile))
+						"""
+		if update_exists:
+			query += """
+			ON DUPLICATE key UPDATE `year`="{year}", `branch`="{branch}", 
+			`contract_no`="{contract}", `parent_name`="{name}", `mobile_no`="{mobile}"
+			"""
+		query = query.format(year=year, branch=branch, contract=contract, name=name, mobile=mobile)
+		frappe.db.sql(query)
 		frappe.db.commit()
 		return True
 	except:
 		return False
 
-def add_parents(parents, password):
+def add_parents(parents, password, update_exists=False, set_password=True):
 	for parent in parents:
 		try:
 			year_code = parent.find('YEARCODE').text
@@ -273,20 +286,25 @@ def add_parents(parents, password):
 
 			if (mobile_no and len(mobile_no) > 7) and (parent_name and len(parent_name) > 1):
 				if not frappe.db.exists('School Parent',mobile_no):
+					print(parent_name)
 					try:
-						if add_user(mobile_no, parent_name):
-							update_password(user=mobile_no, pwd=password)
+						if add_user(mobile_no, parent_name, update_exists=update_exists):
+							if set_password:
+								print("password updated-----------------------------------------")
+								update_password(user=mobile_no, pwd=password)
 					except:
 						pass
 					try:
-						add_parent(year_code, branch_code, contract_no, parent_name, mobile_no)
+						add_parent(year_code, branch_code, contract_no, parent_name, mobile_no, update_exists=update_exists)
 					except:
 						pass
 				else:
-					try:
-						update_parent(year_code, branch_code, contract_no, parent_name, mobile_no)
-					except:
-						print("Error")
+					if update_exists:
+						print("update------------------------------------------------------")
+						try:
+							update_parent(year_code, branch_code, contract_no, parent_name, mobile_no)
+						except:
+							print("Error")
 		except:
 			pass
 	frappe.db.commit()

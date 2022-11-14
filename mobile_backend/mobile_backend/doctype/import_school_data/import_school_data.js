@@ -69,6 +69,8 @@ frappe.ui.form.on('Import School Data', {
 				branch: frm.doc.parent_branch,
 				year: frm.doc.parent_year,
 				password: frm.doc.default_password,
+				set_password: frm.doc.set_password,
+				update_exists: frm.doc.update_exists
 			},
 			callback: (res) => {
 				frappe.hide_progress();
