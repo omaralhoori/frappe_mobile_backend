@@ -202,7 +202,7 @@ class ImportSchoolData(Document):
 		#self.enqueue_add_parents(parents, password)
 		add_parents(parents, password, update_exists, set_password)
 	@frappe.whitelist()
-	def import_student_data(self, branch, year):
+	def import_student_data(self, branch, year, update_exists=False):
 		rel_link = '/reports/rwservlet?report=STRMOBSTD'
 		data_settings = frappe.get_doc("School Settings")
 		url=None
@@ -222,7 +222,7 @@ class ImportSchoolData(Document):
 		res = requests.get(url)
 		tree = ElementTree.fromstring(res.content)
 		students = tree.findall('Student')
-		add_students(students)
+		add_students(students, update_exists)
 
 	@frappe.whitelist()
 	def update_parent_password(self, branch, year):
@@ -319,7 +319,7 @@ def update_parent(year, branch, contract, name, mobile):
 						""".format(year=year, branch=branch, contract=contract, name=name, mobile=mobile))
 	frappe.db.commit()
 
-def add_students(students):
+def add_students(students, update_exists=False):
 	for student in students:
 		try:
 			year_code = student.find('YEARCODE').text
@@ -334,6 +334,8 @@ def add_students(students):
 			if frappe.db.exists({"doctype": "School Parent", "name": mobile_no}):
 				name = year_code + '-' + branch_code + '-' + contract_no + '-' + student_no
 				section = class_code + '-' + section_code
+				if not update_exists and frappe.db.exists({"doctype": "School Student", "name": name}):
+					continue
 				frappe.db.sql("""
 						INSERT INTO `tabSchool Student`(name, creation, modified, modified_by, owner, 
 							year, branch, contract_no, parent_no, student_no, student_name, student_gender, class, section)
@@ -347,6 +349,7 @@ def add_students(students):
 							student_no=student_no,student_name=student_name,student_gender=student_gender,
 							class_code=class_code,section=section
 						))
+						
 				frappe.db.commit()
 		except:
 			pass

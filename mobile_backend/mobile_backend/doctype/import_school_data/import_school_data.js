@@ -92,18 +92,25 @@ frappe.ui.form.on('Import School Data', {
 		})
 	},
 	change_password_button: function(frm){
-		frappe.show_progress("Processing...", 1, 2)
+		frappe.confirm(__('Are you sure you want to change the password for all parents in the selected branch?'),
+    () => {
+        frappe.show_progress("Processing...", 1, 2)
 		frappe.call({
 			doc:frm.doc,
 			method: "update_parent_password",
 			args: {
 				branch: frm.doc.parent_branch,
 				year: frm.doc.parent_year,
+				update_exists: frm.doc.update_exists_2
 			},
 			callback: (res) => {
 				frappe.show_progress("Processing...", 2, 2)
 				frappe.hide_progress();
 			}
 		})
+    }, () => {
+        // action to perform if No is selected
+    })
+		
 	},
 });

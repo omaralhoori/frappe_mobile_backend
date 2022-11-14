@@ -30,6 +30,7 @@
   "student_branch",
   "student_year",
   "column_break_24",
+  "update_exists_2",
   "import_student_data"
  ],
  "fields": [
@@ -163,11 +164,17 @@
    "fieldname": "set_password",
    "fieldtype": "Check",
    "label": "Set Password"
+  },
+  {
+   "default": "0",
+   "fieldname": "update_exists_2",
+   "fieldtype": "Check",
+   "label": "On Duplicate Update"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2022-11-14 04:52:20.335700",
+ "modified": "2022-11-14 05:45:41.483680",
  "modified_by": "Administrator",
  "module": "Mobile Backend",
  "name": "Import School Data",
