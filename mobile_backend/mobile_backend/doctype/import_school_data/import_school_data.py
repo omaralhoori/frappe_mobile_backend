@@ -198,6 +198,8 @@ class ImportSchoolData(Document):
 
 		res = requests.get(url)
 		tree = ElementTree.fromstring(res.content)
+		# content = open("/mnt/d/work/almanar/db/result.xml", "r").read()
+		# tree = ElementTree.fromstring(content)
 		parents = tree.findall('Parent')
 		#self.enqueue_add_parents(parents, password)
 		add_parents(parents, password, update_exists, set_password)
@@ -221,6 +223,8 @@ class ImportSchoolData(Document):
 			return
 		res = requests.get(url)
 		tree = ElementTree.fromstring(res.content)
+		# content = open("/mnt/d/work/almanar/db/students.xml", "r").read()
+		# tree = ElementTree.fromstring(content)
 		students = tree.findall('Student')
 		add_students(students, update_exists)
 
@@ -283,16 +287,20 @@ def add_parents(parents, password, update_exists=False, set_password=True):
 
 			if (mobile_no and len(mobile_no) > 7) and (parent_name and len(parent_name) > 1):
 				if not frappe.db.exists('School Parent',mobile_no):
-					try:
-						if add_user(mobile_no, parent_name, update_exists=update_exists):
-							if set_password:
-								update_password(user=mobile_no, pwd=password)
-					except:
-						pass
-					try:
-						add_parent(year_code, branch_code, contract_no, parent_name, mobile_no, update_exists=update_exists)
-					except:
-						pass
+					old_num = frappe.db.exists('School Parent', {"contract_no": contract_no,"branch":branch_code})
+					if old_num:
+						if not update_parent_mobile_no(old_num, year_code, branch_code, contract_no, parent_name, mobile_no): frappe.msgprint("Unable to update parent number from "  + old_num + " to " + mobile_no)
+					else:
+						try:
+							if add_user(mobile_no, parent_name, update_exists=update_exists):
+								if set_password:
+									update_password(user=mobile_no, pwd=password)
+						except:
+							pass
+						try:
+							add_parent(year_code, branch_code, contract_no, parent_name, mobile_no, update_exists=update_exists)
+						except:
+							pass
 				else:
 					if update_exists:
 						try:
@@ -303,7 +311,44 @@ def add_parents(parents, password, update_exists=False, set_password=True):
 			pass
 	frappe.db.commit()
 	
-
+def update_parent_mobile_no(old_num, year, branch, contract, name, mobile):
+	try:
+		#change mobile in user
+		frappe.db.sql("""
+			UPDATE `tabUser`
+			SET
+				modified=now(), 
+				name="{user}",
+				email="{user}",
+				username="{user}"
+			WHERE name="{old_num}"
+		""".format(user=mobile, old_num=old_num))
+		frappe.db.sql("""
+							UPDATE `tabSchool Parent`
+							SET
+								modified=now(), 
+								name="{mobile}",
+								year="{year}", 
+								branch="{branch}", 
+								contract_no="{contract}", 
+								parent_name="{name}", 
+								mobile_no="{mobile}"
+							WHERE
+								name="{old_num}"
+							""".format(year=year, branch=branch, contract=contract, name=name, mobile=mobile, old_num=old_num))
+		frappe.db.sql("""
+			UPDATE `tabSchool Student` SET parent_no="{mobile}" WHERE parent_no="{old_num}"
+		""".format(mobile=mobile, old_num=old_num))
+		frappe.db.sql("""
+			UPDATE `tabSchool Direct Message` SET parent_no="{mobile}" WHERE parent_no="{old_num}"
+		""".format(mobile=mobile, old_num=old_num))
+		frappe.db.sql("""
+			UPDATE `tabSchool Messaging` SET parent_name="{mobile}" WHERE parent_name="{old_num}"
+		""".format(mobile=mobile, old_num=old_num))
+		frappe.db.commit()
+		return True
+	except:
+		return False
 def update_parent(year, branch, contract, name, mobile):
 	frappe.db.sql("""
 						UPDATE `tabSchool Parent`
