@@ -79,6 +79,16 @@ def get_unread_messages():
 	""", user, as_dict=True)
 
 @frappe.whitelist()
+def get_student_unread_messages():
+	user = frappe.session.user
+	return frappe.db.sql("""
+	SELECT COUNT(m2.parent_name) as unread_messages, m2.student_no FROM `tabSchool Messages` as m1
+		INNER JOIN `tabSchool Messaging`as m2 ON m1.parent=m2.name
+		WHERE m1.is_administration=1 AND m1.is_read=0 AND m2.parent_name=%s and m2.message_type="School Group Message"
+		GROUP BY m2.student_no;
+	""", user, as_dict=True)
+
+@frappe.whitelist()
 def add_reply():
 	message_name = frappe.form_dict.message_name
 	reply = frappe.form_dict.reply
